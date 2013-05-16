@@ -6,8 +6,8 @@
 	<link rel="stylesheet"
 		href="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
 	<link href="resources/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="resources/css/font-awesome.min.css" rel="stylesheet" />
 	<link rel="stylesheet" href="resources/css/styles.css" />
+	<link href="resources/css/bootstrap-responsive.min.css" rel="stylesheet" />
 </h:head>
 <h:body>
 
@@ -45,8 +45,7 @@
 	</div>
 
 	<div class="container">
-
-
+	
 		<!-- Masthead
 		================================================== -->
 		<header class="jumbotron subhead" id="overview">
@@ -61,7 +60,7 @@
 					</p>
 				</div>
 				<div class="span4 offset2">
-					<div class="login-box well">
+					<div id="login-box" class="well">
 						<h3>Entrar</h3>
 						<form class="login-form">
 							<label class="control-label" for="input01">Usuário</label>
@@ -70,9 +69,11 @@
 							<label class="control-label" for="input01">Senha</label>
 							<input type="text" class="input-long" />
 							
-							<br/><br/>
+							<br/>
 							
 							<button type="submit" class="btn">Entrar</button>
+							<p class="forgot-pass-link"><a href="#">Esqueci minha senha</a></p>
+							
 						</form>
 					</div>
 				</div>
