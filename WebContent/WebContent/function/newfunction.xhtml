@@ -1,0 +1,36 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/main_template.xhtml">
+	<ui:define name="title">
+    	#{appBean.pageTitle("Nova função")}
+  	</ui:define>
+	<ui:define name="content">
+		<div class="container">
+			<div class="container">
+				<div class="span4 offset4">
+					<h3>Cadastrando Função</h3>
+					<div class="register_form">
+
+						<label class="control-label" for="input01">Nome da Função</label>
+						<input type="text" class="input-block-level" /> <label
+							class="control-label" for="input01">Descrição</label>
+						<textarea class="input-xlarge" id="textarea" rows="4"
+							style="margin: 0px 0px 10.5px; width: 350px;"></textarea>
+						<br /> <label class="control-label" for="input01">Permissões</label>
+						<label class="checkbox"> <input type="checkbox"
+							id="optionsCheckbox" value="option1" /> Exemplo
+						</label> <label class="checkbox"> <input type="checkbox"
+							id="optionsCheckbox2" value="option1" /> Exemplo 2
+						</label> <label class="checkbox"> <input type="checkbox"
+							id="optionsCheckbox2" value="option1" /> Exemplo 3
+						</label>
+
+						<button type="submit" class="btn">Cadastrar</button>
+						<button type="submit" class="btn">Cancelar</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+

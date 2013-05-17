@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+<<<<<<< HEAD
+    <wb-module deploy-name="Open-Res">
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
+        <wb-resource deploy-path="/" source-path="/WebContent/WebContent"/>
+        <property name="context-root" value="Open-Res"/>
+        <property name="java-output-path" value="/Open-Res/build/classes"/>
+=======
     <wb-module deploy-name="GerenciadorDeRecursos">
         <wb-resource deploy-path="/" source-path="/WebContent" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src"/>
         <property name="context-root" value="GerenciadorDeRecursos"/>
         <property name="java-output-path" value="/GerenciadorDeRecursos/build/classes"/>
+>>>>>>> 621b039f446ce3c8b22a837c2c41d4df5cdb2429
     </wb-module>
 </project-modules>
