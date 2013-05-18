@@ -1,31 +1,30 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:ui="http://java.sun.com/jsf/facelets"
-  template="/templates/main_template.xhtml">
-  <ui:define name="title">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/main_template.xhtml">
+	<ui:define name="title">
       #{appBean.pageTitle("Novo Recurso Sala")}
     </ui:define>
-  <ui:define name="content">
-    <div class="container">
-      <div class="span4 offset4">
-        <h3>Cadastrando Recurso Sala</h3>
-        
-        <ui:include src="/partials/newresourceform.xhtml" />
-    
-        <div class="row register_form">
-          <label class="control-label" for="input01">Local</label> 
-          <input type="text" class="input-block-level" /> <br/>
-          <label class="control-label" for="input01">Comprimento</label> 
-          <input type="text" class="input-block-level" /> <br/>
-          <label class="control-label" for="input01">Largura</label> 
-          <input type="text" class="input-block-level" /> <br/>
-          <label class="control-label" for="input01">Altura</label> 
-          <input type="text" class="input-block-level" /> <br/>
-        </div>
-          <button type="submit" class="btn">Cadastrar</button>
-          <button type="submit" class="btn">Cancelar</button>
-        </div>
-      </div>
-    </div>
-  </ui:define>
+	<ui:define name="content">
+		<div class="container">
+			<div class="span4 offset4">
+				<h3>Cadastrando Recurso Sala</h3>
+
+				<ui:include src="/partials/newresourceform.xhtml" />
+
+				<div class="row register_form">
+					<label class="control-label" for="input01">Local</label> <input
+						type="text" class="input-block-level" /> <br /> <label
+						class="control-label" for="input01">Comprimento</label> <input
+						type="text" class="input-block-level" /> <br /> <label
+						class="control-label" for="input01">Largura</label> <input
+						type="text" class="input-block-level" /> <br /> <label
+						class="control-label" for="input01">Altura</label> <input
+						type="text" class="input-block-level" /> <br />
+				</div>
+				<button type="submit" class="btn">Cadastrar</button>
+				<button type="submit" class="btn">Cancelar</button>
+			</div>
+		</div>
+	</ui:define>
 </ui:composition>
 
