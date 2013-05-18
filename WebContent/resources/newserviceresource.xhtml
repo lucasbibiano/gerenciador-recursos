@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  template="/templates/main_template.xhtml">
+  <ui:define name="title">
+      #{appBean.pageTitle("Novo Recurso Serviço")}
+    </ui:define>
+  <ui:define name="content">
+    <div class="container">
+      <div class="span4 offset4">
+        <h3>Cadastrando Recurso Serviço</h3>
+
+        <ui:include src="/partials/newresourceform.xhtml" />
+
+        <div class="row register_form">
+          <label class="control-label" for="input01">Especificações</label> 
+          <textarea class="input-block-level" id="textarea" rows="4"></textarea>
+          <br /> 
+        </div>
+        <button type="submit" class="btn">Cadastrar</button>
+        <button type="submit" class="btn">Cancelar</button>
+      </div>
+    </div>
+  </ui:define>
+</ui:composition>
+
