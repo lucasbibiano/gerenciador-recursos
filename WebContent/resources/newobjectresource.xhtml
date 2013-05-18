@@ -8,11 +8,12 @@
     <div class="container">
       <div class="span4 offset4">
         <h3>Cadastrando Recurso Objeto</h3>
-        <!--RENDERIZAR O NEWSOURCEFORM AQUI -->
-        <div class="register_form">
+		<ui:include src="/partials/newresourceform.xhtml" />
+		
+        <div class="row register_form">
 
           <label class="control-label" for="input01">Tombamento</label> 
-          <input type="text" class="input-block-level" /> </br>
+          <input type="text" class="input-block-level" /> <br/>
           <label class="checkbox">
               <input type="checkbox" id="optionsCheckbox" value="option1"/>
               É móvel?                     

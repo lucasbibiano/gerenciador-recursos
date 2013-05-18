@@ -153,7 +153,7 @@ public class AbstractDAO<T> {
 
 	}
 	
-	public static void main(String[] args) {
+/*	public static void main(String[] args) {
 		AbstractDAO<Sector> abdao = new AbstractDAO<Sector>(Sector.class);
 		Sector sector = new Sector();
 		sector.setName("huaehuaheuae");
@@ -166,6 +166,6 @@ public class AbstractDAO<T> {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-	}
+	}*/
 }
 
