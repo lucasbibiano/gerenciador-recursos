@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  template="/templates/main_template.xhtml">
+  <ui:define name="title">
+      #{appBean.pageTitle("Novo Usuário")}
+    </ui:define>
+  <ui:define name="content">
+    <div class="container">
+      <div class="span4 offset4">
+        <h3>Cadastrando Usuário</h3>
+
+        <div class="row register_form">
+          <label class="control-label" for="input01">CPF</label> 
+          <input type="text" class="input-block-level" /> <br />
+
+          <label class="control-label" for="input01">Nome</label>
+          <input type="text" class="input-block-level" /> <br /> 
+
+          <label class="control-label" for="input01">E-mail</label>
+          <input type="text" class="input-block-level" /> <br /> 
+
+          <label class="control-label" for="input01">Telefone</label>
+          <input type="text" class="input-block-level" /> <br />
+
+          <label class="control-label" for="input01">Departamento</label>
+          <div class="control-group">
+            <label class="control-label" for="select01">Local</label>
+            <div class="controls">
+              <select id="select01">
+                <option>Setor A</option>
+                <option>Setor B</option>
+                <option>Departamento A</option>
+              </select>
+            </div>
+          </div>
+          
+          <label class="control-label" for="input01">Função</label>
+          <div class="control-group">
+            <label class="control-label" for="select01">Local</label>
+            <div class="controls">
+              <select id="select01">
+                <option>Administrador</option>
+                <option>Secretária</option>
+                <option>Aluno</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+        <button type="submit" class="btn">Cadastrar</button>
+        <button type="submit" class="btn">Cancelar</button>
+      </div>
+    </div>
+  </ui:define>
+</ui:composition>
+
