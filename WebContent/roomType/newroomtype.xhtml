@@ -1,0 +1,26 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  template="/templates/main_template.xhtml">
+  <ui:define name="title">
+      #{appBean.pageTitle("Novo tipo de Sala")}
+    </ui:define>
+  <ui:define name="content">
+    <div class="container">
+      <div class="span4 offset4">
+        <h3>Cadastrando Tipo de Sala</h3>
+        <div class="register_form">
+
+          <label class="control-label" for="input01">Nome do tipo de Sala</label> <input
+            type="text" class="input-block-level" /> <label
+            class="control-label" for="input01">Descrição</label>
+          <textarea class="input-block-level" id="textarea" rows="4"</textarea>
+          <br />
+
+          <button type="submit" class="btn">Cadastrar</button>
+          <button type="submit" class="btn">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </ui:define>
+</ui:composition>
+
