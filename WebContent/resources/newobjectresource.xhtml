@@ -1,0 +1,37 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  template="/templates/main_template.xhtml">
+  <ui:define name="title">
+      #{appBean.pageTitle("Novo Recurso Objeto")}
+    </ui:define>
+  <ui:define name="content">
+    <div class="container">
+      <div class="span4 offset4">
+        <h3>Cadastrando Recurso Objeto</h3>
+        <!--RENDERIZAR O NEWSOURCEFORM AQUI -->
+        <div class="register_form">
+
+          <label class="control-label" for="input01">Tombamento</label> 
+          <input type="text" class="input-block-level" /> </br>
+          <label class="checkbox">
+              <input type="checkbox" id="optionsCheckbox" value="option1"/>
+              É móvel?                     
+          </label>
+          <div class="control-group">
+            <label class="control-label" for="select01">Local</label>
+            <div class="controls">
+              <select id="select01">
+                <option>Sala A</option>
+                <option>Sala B</option>
+                <option>Auditório A</option>
+              </select>
+            </div>
+          </div>
+          <button type="submit" class="btn">Cadastrar</button>
+          <button type="submit" class="btn">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </ui:define>
+</ui:composition>
+
