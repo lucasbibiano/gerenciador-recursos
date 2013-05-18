@@ -18,10 +18,10 @@ public class ConnectionManager {
 	
 			// Create a connection to the database
 			String serverName = "localhost";
-			String mydatabase = "mydatabase";
+			String mydatabase = "openres";
 			String url = "jdbc:mysql://" + serverName + "/" + mydatabase; 
 			
-			String username = "username";
+			String username = "newuser";
 			String password = "password";
 			connection = DriverManager.getConnection(url, username, password);
 		}
