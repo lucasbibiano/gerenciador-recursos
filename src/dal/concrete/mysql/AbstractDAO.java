@@ -148,7 +148,21 @@ public class AbstractDAO<T> {
     }
 
 	public void update(T object) {
-
+		Connection conn = ConnectionManager.getConnection();
+		
+		Statement statement = null;
+        int updateQuery = 0;
+        
+        statement = conn.createStatement();
+        
+        String queryString = "Insert into " + getTableName() + " " + createAttributesString() + " values " + createStringToAdd(object);
+        System.out.println(queryString);                
+        
+        updateQuery = statement.executeUpdate(queryString);
+        
+        if (updateQuery != 0) {
+        	System.out.println("Hue");
+        }
 	}
 
 	public void delete(T object) {
