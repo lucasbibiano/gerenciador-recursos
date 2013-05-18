@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import pojo.Sector;
@@ -92,6 +93,117 @@ public class AbstractDAO<T> {
 		return className.getAnnotation(Storeable.class).tableName();
 	}
 	
+	public List<T> getByAttributes(HashMap<String, Object> attrs) throws SQLException, ClassNotFoundException {
+		Connection conn = ConnectionManager.getConnection();
+		ArrayList<T> result = new ArrayList<T>();
+		
+		Statement statement = null;
+        
+        statement = conn.createStatement();
+        
+        String queryString = "Select * from " + getTableName() + " where " + generateCompareString(attrs);
+        
+        System.out.println(queryString);
+               
+        ResultSet rs = statement.executeQuery(queryString);
+        
+		try {
+			while (rs.next()) {
+				T obj = (T) className.newInstance();
+	
+				for (Field field : className.getDeclaredFields()) {
+					Column col = field.getAnnotation(Column.class);
+	
+					if (col != null) {
+						field.setAccessible(true);
+						field.set(obj, rs.getObject(col.columnName()));
+						field.setAccessible(false);
+					}
+				}
+				
+				result.add(obj);
+			}
+		} catch (InstantiationException | IllegalAccessException e) {
+			e.printStackTrace();
+		}
+        
+        rs.close();
+        
+        return result;
+	}
+	
+	private String generateCompareString(T newObject) {
+		StringBuilder builder = new StringBuilder();
+				
+		String prefix = "";
+		for (Field field: className.getDeclaredFields()) {			
+			Column col = field.getAnnotation(Column.class);
+			
+			if (col != null) {
+				try {
+					builder.append(prefix);
+					prefix = " and ";
+					field.setAccessible(true);
+					Object obj = field.get(newObject);
+					field.setAccessible(false);
+					
+					builder.append(field.getName() + "=");
+					
+					if (field.getType() == String.class)
+						builder.append("'");
+					
+					builder.append(obj.toString());
+					
+					if (field.getType() == String.class)
+						builder.append("'");
+					
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+				
+		return builder.toString();	
+	}
+	
+	private String generateCompareString(HashMap<String, Object> attrs) {
+		StringBuilder builder = new StringBuilder();
+		
+		String prefix = "";
+		for (Field field: className.getDeclaredFields()) {			
+			Column col = field.getAnnotation(Column.class);
+						
+			if (col != null) {
+				try {
+					Object obj = attrs.get(field.getName());
+					
+					if (obj == null)
+						continue;
+					
+					builder.append(prefix);
+					prefix = " and ";
+					
+					builder.append(field.getName() + "=");
+					
+					if (field.getType() == String.class)
+						builder.append("'");
+					
+					builder.append(obj.toString());
+					
+					if (field.getType() == String.class)
+						builder.append("'");
+					
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+				
+		return builder.toString();
+	}
+
 	public void create(T object) throws ClassNotFoundException, SQLException {
 		Connection conn = ConnectionManager.getConnection();
 		
@@ -147,7 +259,7 @@ public class AbstractDAO<T> {
         return result;
     }
 
-	public void update(T object) {
+	public void update(T oldObject, T newObject, boolean settingPK) throws ClassNotFoundException, SQLException {
 		Connection conn = ConnectionManager.getConnection();
 		
 		Statement statement = null;
@@ -155,8 +267,9 @@ public class AbstractDAO<T> {
         
         statement = conn.createStatement();
         
-        String queryString = "Insert into " + getTableName() + " " + createAttributesString() + " values " + createStringToAdd(object);
-        System.out.println(queryString);                
+        String queryString = "Update " + getTableName() + " set " + updateStringToAdd(newObject, settingPK) 
+        	+ " where " + generateCompareString(oldObject);
+        System.out.println(queryString);            
         
         updateQuery = statement.executeUpdate(queryString);
         
@@ -165,23 +278,66 @@ public class AbstractDAO<T> {
         }
 	}
 
+	private String updateStringToAdd(T newObject, boolean settingPK) {
+		StringBuilder builder = new StringBuilder();
+				
+		String prefix = "";
+		for (Field field: className.getDeclaredFields()) {			
+			Column col = field.getAnnotation(Column.class);
+						
+			if (col.pk() && !settingPK)
+				continue;
+			
+			if (col != null) {
+				try {
+					builder.append(prefix);
+					prefix = " , ";
+					field.setAccessible(true);
+					Object obj = field.get(newObject);
+					field.setAccessible(false);
+					
+					builder.append(field.getName() + "=");
+					
+					if (field.getType() == String.class)
+						builder.append("'");
+					
+					builder.append(obj.toString());
+					
+					if (field.getType() == String.class)
+						builder.append("'");
+					
+				} catch (IllegalArgumentException e) {
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+				
+		return builder.toString();	
+	}
+
 	public void delete(T object) {
 
 	}
 	
 	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		AbstractDAO<Sector> abdao = new AbstractDAO<Sector>(Sector.class);
-		Sector sector = new Sector();
-		sector.setName("huaehuaheuae");
-		sector.setDescription("tl;dr");
+
+		Sector sector2 = new Sector();
+		sector2.setName("Departamento bolado");
+		sector2.setDescription("Muito bolado mesmo hu3");
 		        
-/*        try {
-			abdao.create(sector);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}*/
+		System.out.println(abdao.updateStringToAdd(sector2, true));
+		
+		HashMap<String, Object> attrs = new HashMap<String, Object>();
+		attrs.put("id", 2);
+		
+		Sector pesquisado = abdao.getByAttributes(attrs).get(0); //setor cuja id = 3
+		
+		System.out.println("Pesquisado: " + pesquisado);
+		
+		abdao.update(pesquisado, sector2, false);
         
         for (Sector s: abdao.getAll())
         	System.out.println(s.toString());;
