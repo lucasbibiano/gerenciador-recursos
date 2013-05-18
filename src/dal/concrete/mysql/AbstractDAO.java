@@ -128,9 +128,11 @@ public class AbstractDAO<T> {
 				
 	            for (Field field: className.getDeclaredFields()) {			
 	    			Column col = field.getAnnotation(Column.class);
-	    						
+	    			
 	    			if (col != null) {
+	    				field.setAccessible(true);
 	    				field.set(obj, rs.getObject(col.columnName()));
+	    				field.setAccessible(false);
 	    			}
 	    		}
 	            
@@ -153,19 +155,22 @@ public class AbstractDAO<T> {
 
 	}
 	
-/*	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		AbstractDAO<Sector> abdao = new AbstractDAO<Sector>(Sector.class);
 		Sector sector = new Sector();
 		sector.setName("huaehuaheuae");
 		sector.setDescription("tl;dr");
 		        
-        try {
+/*        try {
 			abdao.create(sector);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-	}*/
+		}*/
+        
+        for (Sector s: abdao.getAll())
+        	System.out.println(s.toString());;
+	}
 }
 
