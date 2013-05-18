@@ -1,0 +1,52 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  template="/templates/main_template.xhtml">
+  <ui:define name="title">
+      #{appBean.pageTitle("Nova Reserva")}
+    </ui:define>
+  <ui:define name="content">
+    <div class="container">
+      <div class="span4 offset4">
+        <h3>Realizando Reserva</h3>
+
+        <div class="row register_form">
+          <label class="control-label" for="input01">CPF do Reservante</label> 
+          <input type="text" class="input-block-level" /> <br />
+
+          <label class="control-label" for="input01">Recursos</label>
+          <input type="text" class="input-block-level" /> <br /> 
+          
+          <button class="btn">+</button>
+          
+          <label class="control-label" for="input01">Hora de Início</label>
+          <div class="control-group">
+            <label class="control-label" for="select01">Hora</label>
+            <div class="controls">
+              <select id="select01">
+                <option>Setor A</option>
+                <option>Setor B</option>
+                <option>Departamento A</option>
+              </select>
+            </div>
+          </div>
+          
+          <label class="control-label" for="input01">Hora de Término</label>
+          <div class="control-group">
+            <label class="control-label" for="select01">Hora</label>
+            <div class="controls">
+              <select id="select01">
+                <option>Administrador</option>
+                <option>Secretária</option>
+                <option>Aluno</option>
+              </select>
+            </div>
+          </div>
+
+        </div>
+        <button type="submit" class="btn">Cadastrar</button>
+        <button type="submit" class="btn">Cancelar</button>
+      </div>
+    </div>
+  </ui:define>
+</ui:composition>
+
