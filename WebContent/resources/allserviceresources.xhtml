@@ -1,0 +1,47 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  template="/templates/main_template.xhtml">
+  <ui:define name="title">
+      #{appBean.pageTitle("Listar Salas")}
+    </ui:define>
+  <ui:define name="content">
+    <div class="container">
+      <h3>Lista de Salas</h3>
+      <!-- TODO -->
+      <!-- Listar todos os setores, pesquisa-los, e fornecer um jeito de deleta-los -->
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>É reservável?</th>
+            <th>Departamento<th>
+            <th>Especificação Técnica
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>5</td>
+            <td>Internet Wi-Fi</td>
+            <td>Internet Wi-Fi</td>
+            <td>Não</td>
+            <td>Geral</td>
+            <td>100Mbps</td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>Ar-condicionado</td>
+            <td>Ar-condicionado</td>
+            <td>Não</td>
+            <td>Geral</td>
+            <td>Frio pra dedéu</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ui:define>
+</ui:composition>
+
+
+
