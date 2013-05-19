@@ -1,0 +1,44 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  template="/templates/main_template.xhtml">
+  <ui:define name="title">
+      #{appBean.pageTitle("Listar Usuários")}
+    </ui:define>
+  <ui:define name="content">
+    <div class="container">
+      <h3>Lista de Usuários</h3>
+      <!-- TODO -->
+      <!-- Listar todos os setores, pesquisa-los, e fornecer um jeito de deleta-los -->
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>CPF</th>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Telefone</th>
+            <th>Função</th>
+            <th>Departamento</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>111.111.111.11</td>
+            <td>João Bobão</td>
+            <td>joaobobao@exemplo.com</td>
+            <td>4444-4444</td>
+            <td>Estagiário<td>
+            <td>Departamento da Zuera<td> 
+          </tr>
+          <tr>
+            <td>222.222.222.22</td>
+            <td>Joaquim Pudim</td>
+            <td>joaquimpudim@exemplo.com</td>
+            <td>5555-5555</td>
+            <td>Chefe de Departamento<td>
+            <td>Departamento da Seriedade<td> 
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ui:define>
+</ui:composition>
