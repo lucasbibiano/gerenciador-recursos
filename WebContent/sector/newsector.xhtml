@@ -1,5 +1,6 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
 	template="/templates/main_template.xhtml">
 	<ui:define name="title">
     	#{appBean.pageTitle("Novo setor")}
@@ -8,19 +9,23 @@
 		<div class="container">
 			<div class="span4 offset4">
 				<h3>Cadastrando Setor</h3>
-				<div class="register_form">
+				<h:form class="register_form">
 
-					<label class="control-label" for="input01">Nome do Setor</label> <input
-						type="text" class="input-block-level" /> <label
-						class="control-label" for="input01">Descrição</label>
-					<textarea class="input-block-level" id="textarea" rows="4"></textarea>
-					<br />
+					<h:outputLabel value="Nome do Setor" for="name" />				
+					<h:inputText id="name" class="input-block-level" value="#{sectorBean.name}">
+					</h:inputText>
+					
+					<h:outputLabel value="Descrição" for="desc" />				
+					<h:inputTextarea id="desc" class="input-block-level" value="#{sectorBean.description}"
+					 rows="4" >
+					</h:inputTextarea>
+					<br/>					
 
-					<button type="submit" class="btn">Cadastrar</button>
-					<button type="submit" class="btn">Cancelar</button>
-				</div>
+					<h:commandButton value="Cadastrar" type="submit" class="btn" action="#{sectorBean.addSector}">
+					</h:commandButton>										
+				</h:form>
 			</div>
-		</div>
+		</div>		
 	</ui:define>
 </ui:composition>
 

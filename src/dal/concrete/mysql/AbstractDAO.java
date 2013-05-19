@@ -15,7 +15,7 @@ import dal.annotations.Column;
 import dal.annotations.Storeable;
 import dal.connection.ConnectionManager;
 
-public class AbstractDAO<T> {
+public  class AbstractDAO<T> {
 
 	private Class<?> className;
 	
@@ -61,6 +61,7 @@ public class AbstractDAO<T> {
 				continue;
 						
 			if (col != null) {
+				
 				try {
 					builder.append(prefix);
 					prefix = ", ";
@@ -353,7 +354,7 @@ public class AbstractDAO<T> {
         }
 	}
 	
-	public static void main(String[] args) throws ClassNotFoundException, SQLException {
+/*	public static void main(String[] args) throws ClassNotFoundException, SQLException {
 		AbstractDAO<Sector> abdao = new AbstractDAO<Sector>(Sector.class);
 
 		//criando setor
@@ -422,7 +423,6 @@ public class AbstractDAO<T> {
         	System.out.println(s.toString());
         	
     	System.out.println("=====================");
-
-	}
+	}*/
 }
 
