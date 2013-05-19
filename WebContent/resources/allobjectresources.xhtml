@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  template="/templates/main_template.xhtml">
+  <ui:define name="title">
+      #{appBean.pageTitle("Listar Salas")}
+    </ui:define>
+  <ui:define name="content">
+    <div class="container">
+      <h3>Lista de Salas</h3>
+      <!-- TODO -->
+      <!-- Listar todos os setores, pesquisa-los, e fornecer um jeito de deleta-los -->
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>É reservável?</th>
+            <th>Departamento<th>
+            <th>Tombamento</th>
+            <th>Localizado em</th>
+            <th>É movel?</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>3</td>
+            <td>Projetor de Vídeo</td>
+            <td>Projetor multimídia Sony</td>
+            <td>Sim</td>
+            <td>Departamento da Zuera</td>
+            <td>9999-9999</td>
+            <td>Secretaria do Departamento da Zuera</td>
+            <td>Sim</td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>Projetor de Vídeo</td>
+            <td>Projetor multimídia CCE</td>
+            <td>Não</td>
+            <td>Departamento da Seriedade</td>
+            <td>8888-8888</td>
+            <td>Secretaria do Departamento da Seriedade</td>
+            <td>Não</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ui:define>
+</ui:composition>
+
+
+
