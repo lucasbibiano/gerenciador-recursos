@@ -123,7 +123,10 @@ public class AbstractDAO<T> {
 				
 				result.add(obj);
 			}
-		} catch (InstantiationException | IllegalAccessException e) {
+		} catch (InstantiationException e){
+			e.printStackTrace();
+		}		
+		catch (IllegalAccessException e) {
 			e.printStackTrace();
 		}
         
@@ -249,7 +252,9 @@ public class AbstractDAO<T> {
 	    		}
 	            
 	            result.add(obj);
-			} catch (InstantiationException | IllegalAccessException e) {
+			} catch (InstantiationException e){
+				e.printStackTrace();
+			}catch(IllegalAccessException e) {
 				e.printStackTrace();
 			}
         }
