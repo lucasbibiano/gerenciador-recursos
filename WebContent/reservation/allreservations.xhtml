@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:ui="http://java.sun.com/jsf/facelets"
+  template="/templates/main_template.xhtml">
+  <ui:define name="title">
+      #{appBean.pageTitle("Listar Reservas")}
+    </ui:define>
+  <ui:define name="content">
+    <div class="container">
+      <h3>Lista de Reservas</h3>
+      <!-- TODO -->
+      <!-- Listar todos os setores, pesquisa-los, e fornecer um jeito de deleta-los -->
+      <table class="table table-bordered table-striped table-hover">
+        <thead>
+          <tr>
+            <th>Hora de Início</th>
+            <th>Hora de Término</th>
+            <th>Data da Reserva</th>
+            <th>Reservado a</th>
+            <th>Descricao</th>
+            <th>Recursos reservados</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>28/05/2013 - 13:00h</td>
+            <td>28/05/2013 - 15:00h</td>
+            <td>21/05/2013</td>
+            <td>Joaquim Pudim</td>
+            <td>Curso de Culinária<td>
+            <td>
+              <ul>
+                <li>Sala A01<li>
+                <li>Cabo VGA 01</li>
+                <li>Panela de Pressão 07</li>
+              </ul>
+            <td> 
+          </tr>
+          <tr>
+            <td>27/06/2013 - 16:30h</td>
+            <td>28/05/2013 - 18:00h</td>
+            <td>20/05/2013</td>
+            <td>João Bobão</td>
+            <td>Hackeando a Vida<td>
+            <td>
+              <ul>
+                <li>Laboratório 07<li>
+                <li>Projetor 33</li>
+                <li>Reator de Fusão a Frio 42</li>
+              </ul>
+            <td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </ui:define>
+</ui:composition>
