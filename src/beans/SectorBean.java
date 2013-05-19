@@ -2,11 +2,14 @@ package beans;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import pojo.Sector;
 
@@ -21,6 +24,7 @@ public class SectorBean implements Serializable {
 	private String name;
 	private String description;
 	private long id;
+	private List<Sector> sectors;
 	
 	private static SectorDAO dao;
 	
@@ -34,19 +38,20 @@ public class SectorBean implements Serializable {
 		
 		sector.setName(this.name);
 		sector.setDescription(this.description);
-		
-		System.out.println("\n\n========================\n\n");
-		System.out.println(this.name == null);
-		System.out.println(this.description == null);
-		System.out.println("\n\n========================\n\n");
 
 		try {
 			dao.create(sector);
 			
-			return null;
+			FacesContext.getCurrentInstance()
+		       .addMessage("success", new FacesMessage("Setor cadastrado"));
+			
+			return "allsectors";
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
+		
+		FacesContext.getCurrentInstance()
+	       .addMessage("error", new FacesMessage("Houve algum erro no cadastro do setor"));
 		
 		return "newsector";
 	}
@@ -59,7 +64,7 @@ public class SectorBean implements Serializable {
 	}
 	
 	public void getAllSectors() {
-		
+
 	}
 	
 	public void searchSectorsByName() {
@@ -88,5 +93,15 @@ public class SectorBean implements Serializable {
 
 	public void setId(long id) {
 		this.id = id;
+	}
+
+	public List<Sector> getSectors() {
+		try {
+			sectors = dao.getAll();
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}	
+		
+		return sectors;
 	}
 }

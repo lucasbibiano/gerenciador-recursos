@@ -1,44 +1,63 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
 	template="/templates/main_template.xhtml">
 	<ui:define name="title">
     	#{appBean.pageTitle("Listar Departamentos")}
   	</ui:define>
 	<ui:define name="content">
 		<div class="container">
-			<h3>Lista de Departamentos</h3>
-			<!-- TODO -->
-			<!-- Listar todos os setores, pesquisa-los, e fornecer um jeito de deleta-los -->
-			<table class="table table-bordered table-striped table-hover">
-		    <thead>
-		      <tr>
-		        <th>#</th>
-		        <th>Nome</th>
-		        <th>Descrição</th>
-		        <th>Quantidade de Funcionários/th>
-		      </tr>
-		    </thead>
-		    <tbody>
-		      <tr>
-		        <td>1</td>
-		        <td>Departamento da Zuera</td>
-		        <td>Aquele lá, né, você sabe.</td>
-		        <td>9000</td>
-		      </tr>
-		      <tr>
-		        <td>2</td>
-		        <td>Departamento da Seriedade</td>
-		        <td>O que não é da Zuera</td>
-		        <td>2</td>
-		      </tr>
-		      <tr>
-		        <td>3</td>
-		        <td>Departamento dos Departamentos</td>
-		        <td>O que não é os dois primeiros</td>
-		        <td>@100</td>
-		      </tr>
-		    </tbody>
-		  </table>
+			<h3>Lista de Setores</h3>
+
+			<h:dataTable value="#{sectorBean.sectors}" var="sect"
+				class="table table-bordered table-striped table-hover">
+				<h:column>
+					<f:facet name="header">#</f:facet>
+    				#{sect.id}
+    			</h:column>
+
+				<h:column>
+					<f:facet name="header">Product Name</f:facet>
+    				#{sect.name}
+    			</h:column>
+
+				<h:column>
+					<f:facet name="header">Price</f:facet>
+    				#{sect.description}
+    			</h:column>
+			</h:dataTable>
+
+			<!--<table>
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Nome</th>
+						<th>Descrição</th>
+						<th>Quantidade de Funcionários</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>1</td>
+						<td>Departamento da Zuera</td>
+						<td>Aquele lá, né, você sabe.</td>
+						<td>9000</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>Departamento da Seriedade</td>
+						<td>O que não é da Zuera</td>
+						<td>2</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>Departamento dos Departamentos</td>
+						<td>O que não é os dois primeiros</td>
+						<td>@100</td>
+					</tr>
+				</tbody>
+			</table>-->
 		</div>
 	</ui:define>
 </ui:composition>
