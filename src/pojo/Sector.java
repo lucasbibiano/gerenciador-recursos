@@ -1,7 +1,5 @@
 package pojo;
 
-import java.io.Serializable;
-
 import dal.annotations.Storeable;
 import dal.annotations.Column;
 
