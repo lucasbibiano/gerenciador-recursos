@@ -15,7 +15,7 @@ import dal.annotations.Column;
 import dal.annotations.Storeable;
 import dal.connection.ConnectionManager;
 
-public  class AbstractDAO<T> {
+public abstract class AbstractDAO<T> {
 
 	private Class<?> className;
 	
@@ -94,6 +94,48 @@ public  class AbstractDAO<T> {
 		return className.getAnnotation(Storeable.class).tableName();
 	}
 	
+	public T getByPk(T object) throws SQLException, ClassNotFoundException {
+		Connection conn = ConnectionManager.getConnection();
+		ArrayList<T> result = new ArrayList<T>();
+		
+		Statement statement = null;
+        
+        statement = conn.createStatement();
+        
+        String queryString = "Select * from " + getTableName() + " where " + generateCompareString(object, true);
+        
+        System.out.println(queryString);
+               
+        ResultSet rs = statement.executeQuery(queryString);
+        
+		try {
+			while (rs.next()) {
+				T obj = (T) className.newInstance();
+	
+				for (Field field : className.getDeclaredFields()) {
+					Column col = field.getAnnotation(Column.class);
+	
+					if (col != null) {
+						field.setAccessible(true);
+						field.set(obj, rs.getObject(col.columnName()));
+						field.setAccessible(false);
+					}
+				}
+				
+				result.add(obj);
+			}
+		} catch (InstantiationException e){
+			e.printStackTrace();
+		}		
+		catch (IllegalAccessException e) {
+			e.printStackTrace();
+		}
+        
+        rs.close();
+        
+        return result.get(0);
+	}
+	
 	public List<T> getByAttributes(HashMap<String, Object> attrs) throws SQLException, ClassNotFoundException {
 		Connection conn = ConnectionManager.getConnection();
 		ArrayList<T> result = new ArrayList<T>();
@@ -136,7 +178,7 @@ public  class AbstractDAO<T> {
         return result;
 	}
 	
-	private String generateCompareString(T newObject) {
+	private String generateCompareString(T newObject, boolean onlyPk) {
 		StringBuilder builder = new StringBuilder();
 				
 		String prefix = "";
@@ -144,6 +186,9 @@ public  class AbstractDAO<T> {
 			Column col = field.getAnnotation(Column.class);
 			
 			if (col != null) {
+				if (!col.pk())
+					continue;
+				
 				try {
 					builder.append(prefix);
 					prefix = " and ";
@@ -265,6 +310,25 @@ public  class AbstractDAO<T> {
         return result;
     }
 
+	public void update(T newObject) throws ClassNotFoundException, SQLException {
+		Connection conn = ConnectionManager.getConnection();
+		
+		Statement statement = null;
+        int updateQuery = 0;
+        
+        statement = conn.createStatement();
+        
+        String queryString = "Update " + getTableName() + " set " + updateStringToAdd(newObject) 
+        	+ " where " + generateCompareString(newObject, true);
+        System.out.println(queryString);            
+        
+        updateQuery = statement.executeUpdate(queryString);
+        
+        if (updateQuery != 0) {
+        	System.out.println("Hue");
+        }
+	}
+	
 	public void update(T oldObject, T newObject) throws ClassNotFoundException, SQLException {
 		Connection conn = ConnectionManager.getConnection();
 		
@@ -274,7 +338,7 @@ public  class AbstractDAO<T> {
         statement = conn.createStatement();
         
         String queryString = "Update " + getTableName() + " set " + updateStringToAdd(newObject) 
-        	+ " where " + generateCompareString(oldObject);
+        	+ " where " + generateCompareString(oldObject, false);
         System.out.println(queryString);            
         
         updateQuery = statement.executeUpdate(queryString);
@@ -331,7 +395,25 @@ public  class AbstractDAO<T> {
         
         statement = conn.createStatement();
         
-        String queryString = "Delete from " + getTableName() + " where " + generateCompareString(object);
+        String queryString = "Delete from " + getTableName() + " where " + generateCompareString(object, false);
+        System.out.println(queryString);            
+        
+        updateQuery = statement.executeUpdate(queryString);
+        
+        if (updateQuery != 0) {
+        	System.out.println("Hue");
+        }
+	}
+	
+	public void deleteByPk(T object) throws ClassNotFoundException, SQLException {
+		Connection conn = ConnectionManager.getConnection();
+		
+		Statement statement = null;
+        int updateQuery = 0;
+        
+        statement = conn.createStatement();
+        
+        String queryString = "Delete from " + getTableName() + " where " + generateCompareString(object, true);
         System.out.println(queryString);            
         
         updateQuery = statement.executeUpdate(queryString);

@@ -1,6 +1,5 @@
 package beans;
 
-import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -8,7 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
-import javax.faces.bean.ViewScoped;
+import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 
 import pojo.Sector;
@@ -16,14 +15,12 @@ import pojo.Sector;
 import dal.concrete.mysql.SectorDAO;
 
 @ManagedBean(name = "sectorBean")
-@ViewScoped
-public class SectorBean implements Serializable {
-
-	private static final long serialVersionUID = 76888622285120538L;
+@SessionScoped
+public class SectorBean {
 	
-	private String name;
-	private String description;
-	private long id;
+	private HtmlDataTable dataTable;
+	
+	private Sector sector;
 	private List<Sector> sectors;
 	
 	private static SectorDAO dao;
@@ -31,19 +28,17 @@ public class SectorBean implements Serializable {
 	@PostConstruct
 	public void init() {
 		dao = SectorDAO.getInstance();
+		sector = new Sector();
 	}
 
-	public String addSector() {		
-		Sector sector = new Sector();
-		
-		sector.setName(this.name);
-		sector.setDescription(this.description);
-
+	public String addSector() {			
 		try {
 			dao.create(sector);
 			
 			FacesContext.getCurrentInstance()
 		       .addMessage("success", new FacesMessage("Setor cadastrado"));
+			
+			sector = new Sector();
 			
 			return "allsectors";
 		} catch (ClassNotFoundException | SQLException e) {
@@ -53,14 +48,61 @@ public class SectorBean implements Serializable {
 		FacesContext.getCurrentInstance()
 	       .addMessage("error", new FacesMessage("Houve algum erro no cadastro do setor"));
 		
+		sector = new Sector();
+		
 		return "newsector";
 	}
 
-	public void removeSector() {
+	public String editSector() {
+		sector = (Sector) dataTable.getRowData();
 		
+		return "editsector";
 	}
 	
-	public void editSector() {
+	public String deleteSector() {
+		sector = (Sector) dataTable.getRowData();
+		
+		try {
+			dao.delete(sector);
+			
+			FacesContext.getCurrentInstance()
+		       .addMessage("success", new FacesMessage("Setor deletado"));
+			
+			sector = new Sector();
+			
+			return "allsectors";
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		
+		FacesContext.getCurrentInstance()
+	       .addMessage("error", new FacesMessage("Houve algum erro ao apagar o setor"));
+		
+		sector = new Sector();
+		
+		return "allsectors";
+	}
+	
+	public String updateSector() {
+		try {
+			dao.update(sector);
+			
+			FacesContext.getCurrentInstance()
+		       .addMessage("success", new FacesMessage("Setor atualizado"));
+			
+			sector = new Sector();
+			
+			return "allsectors";
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		
+		FacesContext.getCurrentInstance()
+	       .addMessage("error", new FacesMessage("Houve algum erro na edição do setor"));
+		
+		sector = new Sector();
+		
+		return "editsector";
 	}
 	
 	public void getAllSectors() {
@@ -70,29 +112,13 @@ public class SectorBean implements Serializable {
 	public void searchSectorsByName() {
 		
 	}
-	
-	public String getName() {
-		return name;
+
+	public Sector getSector() {
+		return sector;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
-	}
-
-	public long getId() {
-		return id;
-	}
-
-	public void setId(long id) {
-		this.id = id;
+	public void setSector(Sector sector) {
+		this.sector = sector;
 	}
 
 	public List<Sector> getSectors() {
@@ -103,5 +129,13 @@ public class SectorBean implements Serializable {
 		}	
 		
 		return sectors;
+	}
+
+	public HtmlDataTable getDataTable() {
+		return dataTable;
+	}
+
+	public void setDataTable(HtmlDataTable dataTable) {
+		this.dataTable = dataTable;
 	}
 }

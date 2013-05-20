@@ -1,13 +1,31 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
 	template="/templates/main_template.xhtml">
 	<ui:define name="title">
-    	#{appBean.pageTitle("Editar setor")}
+    	#{appBean.pageTitle("Novo setor")}
   	</ui:define>
 	<ui:define name="content">
 		<div class="container">
-			<!-- TODO -->
-		</div>
+			<div class="span4 offset4">
+				<h3>Cadastrando Setor</h3>
+				<h:form class="register_form">
+
+					<h:outputLabel value="Nome do Setor" for="name" />				
+					<h:inputText id="name" class="input-block-level" value="#{sectorBean.sector.name}">
+					</h:inputText>
+					
+					<h:outputLabel value="Descrição" for="desc" />				
+					<h:inputTextarea id="desc" class="input-block-level" value="#{sectorBean.sector.description}"
+					 rows="4" >
+					</h:inputTextarea>
+					<br/>					
+
+					<h:commandButton value="Editar" type="submit" class="btn" action="#{sectorBean.updateSector}">
+					</h:commandButton>										
+				</h:form>
+			</div>
+		</div>		
 	</ui:define>
 </ui:composition>
 

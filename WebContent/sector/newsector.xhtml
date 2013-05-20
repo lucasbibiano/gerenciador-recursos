@@ -12,11 +12,11 @@
 				<h:form class="register_form">
 
 					<h:outputLabel value="Nome do Setor" for="name" />				
-					<h:inputText id="name" class="input-block-level" value="#{sectorBean.name}">
+					<h:inputText id="name" class="input-block-level" value="#{sectorBean.sector.name}">
 					</h:inputText>
 					
 					<h:outputLabel value="Descrição" for="desc" />				
-					<h:inputTextarea id="desc" class="input-block-level" value="#{sectorBean.description}"
+					<h:inputTextarea id="desc" class="input-block-level" value="#{sectorBean.sector.description}"
 					 rows="4" >
 					</h:inputTextarea>
 					<br/>					

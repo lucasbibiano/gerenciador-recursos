@@ -8,25 +8,37 @@
   	</ui:define>
 	<ui:define name="content">
 		<div class="container">
-			<h3>Lista de Setores</h3>
+			<h:form>
+				<h3>Lista de Setores</h3>
 
-			<h:dataTable value="#{sectorBean.sectors}" var="sect"
-				class="table table-bordered table-striped table-hover">
-				<h:column>
-					<f:facet name="header">#</f:facet>
-    				#{sect.id}
-    			</h:column>
+				<h:dataTable binding="#{sectorBean.dataTable}"
+					value="#{sectorBean.sectors}" var="sect"
+					class="table table-bordered table-striped table-hover">
+					<h:column>
+						<f:facet name="header">#</f:facet>
+    					#{sect.id}
+    				</h:column>
 
-				<h:column>
-					<f:facet name="header">Product Name</f:facet>
-    				#{sect.name}
-    			</h:column>
+					<h:column>
+						<f:facet name="header">Nome</f:facet>
+	    				#{sect.name}
+	    			</h:column>
 
-				<h:column>
-					<f:facet name="header">Price</f:facet>
-    				#{sect.description}
-    			</h:column>
-			</h:dataTable>
+					<h:column>
+						<f:facet name="header">Descrição</f:facet>
+	    				#{sect.description}
+	    			</h:column>
+
+					<h:column>
+						<f:facet name="header"></f:facet>
+						<h:commandLink action="#{sectorBean.editSector}" value="Editar" /> |
+						<h:commandLink action="#{sectorBean.deleteSector}" value="Remover" onclick="return confirm('Tem certeza de que deseja remover o setor?')" />
+					</h:column>
+
+				</h:dataTable>
+			</h:form>
+			
+			<a href="/Open-Res/faces/sector/newsector.xhtml">Novo setor</a>
 
 			<!--<table>
 				<thead>
