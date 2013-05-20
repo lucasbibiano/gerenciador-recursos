@@ -2,7 +2,6 @@ package dal.concrete.mysql;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -12,9 +11,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
-import pojo.Sector;
-
 import dal.annotations.Column;
+import dal.annotations.DBCollection;
 import dal.annotations.ForeignKey;
 import dal.annotations.Storeable;
 import dal.connection.ConnectionManager;
@@ -94,6 +92,44 @@ public abstract class AbstractDAO<T> {
 	}
 	
 	public void loadRelationships(T object) {
+		loadOneRelationships(object);
+		loadManyRelationships(object);
+	}
+
+	private void loadManyRelationships(T object) {
+		for (Field field: className.getDeclaredFields()) {			
+			DBCollection dbc = field.getAnnotation(DBCollection.class);
+										
+			if (dbc != null) {
+				try {
+					Class<?> dbcClass = dbc.klass();
+					HashMap<String, Object> search = new HashMap<String, Object>();
+					
+					for (int i = 0; i < dbc.thisPk().length; i++) {					
+						Field fieldThis = object.getClass().getDeclaredField(dbc.thisPk()[i]);
+						
+						fieldThis.setAccessible(true);
+						Object value = fieldThis.get(object);
+						fieldThis.setAccessible(false);
+						
+						search.put(dbc.fk()[i], value);
+					}					
+					Class<?> klass = Class.forName("dal.concrete.mysql." + dbcClass.getSimpleName() + "DAO");
+					AbstractDAO<?> daoAux = (AbstractDAO<?>) klass.getMethod("getInstance", new Class[]{}).invoke(null, new Object[]{});
+					
+					Object result = daoAux.getByAttributes(search);
+					
+					field.setAccessible(true);
+					field.set(object, result);
+					field.setAccessible(false);
+				} catch (IllegalAccessException | NoSuchFieldException | SecurityException | ClassNotFoundException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException | SQLException e) {
+					e.printStackTrace();
+				}				
+			}
+		}
+	}
+
+	private void loadOneRelationships(T object) {
 		for (Field field: className.getDeclaredFields()) {			
 			ForeignKey fk = field.getAnnotation(ForeignKey.class);
 						

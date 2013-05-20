@@ -1,5 +1,8 @@
 package pojo;
 
+import java.util.List;
+
+import dal.annotations.DBCollection;
 import dal.annotations.Storeable;
 import dal.annotations.Column;
 
@@ -14,6 +17,9 @@ public class Sector {
 	
 	@Column(columnName = "description")
 	private String description;
+	
+	@DBCollection(klass = User.class, thisPk = {"id"}, fk = {"sectorID"})
+	private List<User> users;
 	
 	public String toString() {
 		return "id = " + id + "; name = " + name + "; description = " + description;
@@ -36,5 +42,8 @@ public class Sector {
 	}
 	public void setName(String name) {
 		this.name = name;
+	}
+	public List<User> getUsers() {
+		return users;
 	}
 }
