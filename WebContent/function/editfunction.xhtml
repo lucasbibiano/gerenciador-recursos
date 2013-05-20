@@ -11,7 +11,7 @@
 				<h3>Cadastrando função</h3>
 				<h:form class="register_form">
 
-					<h:outputLabel value="Nome da função" for="name" />				
+					<h:outputLabel value="Nome da Função" for="name" />				
 					<h:inputText id="name" class="input-block-level" value="#{functionBean.function.name}">
 					</h:inputText>
 					
@@ -21,9 +21,8 @@
 					</h:inputTextarea>
 					<br/>					
 
-					<h:commandButton value="Cadastrar" type="submit" class="btn" action="#{functionBean.addFunction}">
-					</h:commandButton>
-									
+					<h:commandButton value="Editar" type="submit" class="btn" action="#{functionBean.updateFunction}">
+					</h:commandButton>										
 				</h:form>
 			</div>
 		</div>		

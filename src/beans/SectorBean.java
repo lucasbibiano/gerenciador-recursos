@@ -111,14 +111,6 @@ public class SectorBean {
 		
 		return "showsector";
 	}	
-	
-	public void getAllSectors() {
-
-	}
-	
-	public void searchSectorsByName() {
-		
-	}
 
 	public Sector getSector() {
 		return sector;

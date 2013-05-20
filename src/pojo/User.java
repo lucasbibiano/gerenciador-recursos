@@ -4,7 +4,7 @@ import dal.annotations.Column;
 import dal.annotations.ForeignKey;
 import dal.annotations.Storeable;
 
-@Storeable(tableName = "User")
+@Storeable(tableName = "Users")
 public class User {
 	
 	@Column(columnName = "cpf", pk = true)

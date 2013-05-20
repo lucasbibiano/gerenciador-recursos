@@ -1,0 +1,31 @@
+drop table Sectors;
+drop table Functions;
+drop table Users;
+
+CREATE TABLE Sectors (
+      id bigint NOT NULL AUTO_INCREMENT,
+      name varchar(255),
+      description varchar(255),
+PRIMARY KEY(id),
+INDEX Sector_id_INDEX (id));
+
+CREATE TABLE Functions (
+      id bigint NOT NULL AUTO_INCREMENT,
+      name varchar(255),
+      description varchar(255),
+      PRIMARY KEY(id),
+INDEX Function_id_INDEX (id));
+
+CREATE TABLE Users (
+      cpf varchar(255) NOT NULL,
+      name varchar(255),
+      email varchar(255),
+      telephone varchar(255),
+      sectorID bigint,
+      functionID bigint,
+      FOREIGN KEY (sectorID) REFERENCES Sectors(id),
+      FOREIGN KEY (sectorID) REFERENCES Functions(id),
+      PRIMARY KEY(cpf),
+INDEX User_cpf_INDEX (cpf));
+
+
