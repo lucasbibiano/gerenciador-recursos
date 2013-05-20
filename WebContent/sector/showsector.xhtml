@@ -1,12 +1,50 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/templates/main_template.xhtml">
+	template="/templates/main_template.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
 	<ui:define name="title">
     	#{appBean.pageTitle("Exibir detalhes do setor")}
   	</ui:define>
 	<ui:define name="content">
 		<div class="container">
-			<!-- TODO -->
+			<div class="row">
+				<div class="span12">
+					<h3>Detalhes do setor</h3>
+
+					<p>Nome: #{sectorBean.sector.name}</p>
+					<p>Descrição: #{sectorBean.sector.description}</p>
+
+					<h4>Usuários que fazem parte do setor</h4>
+
+					<h:dataTable value="#{sectorBean.sector.users}" var="user"
+						class="table table-bordered table-striped table-hover">
+						<h:column>
+							<f:facet name="header">CPF</f:facet>
+    					#{user.cpf}
+    				</h:column>
+
+					<h:column>
+						<f:facet name="header">Nome</f:facet>
+	    				#{user.name}
+	    			</h:column>
+
+					<h:column>
+						<f:facet name="header">Email</f:facet>
+	    				#{user.email}
+	    			</h:column>
+
+					<h:column>
+						<f:facet name="header">Telefone</f:facet>
+	    				#{user.telephone}
+	    			</h:column>
+
+					</h:dataTable>
+
+					<h:link value="Voltar para a listagem de setores"
+						outcome="allsectors.xhtml" />
+				</div>
+			</div>
 		</div>
 	</ui:define>
 </ui:composition>

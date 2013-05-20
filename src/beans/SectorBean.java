@@ -105,6 +105,13 @@ public class SectorBean {
 		return "editsector";
 	}
 	
+	public String showSector() {
+		sector = (Sector) dataTable.getRowData();
+		dao.loadRelationships(sector);
+		
+		return "showsector";
+	}	
+	
 	public void getAllSectors() {
 
 	}

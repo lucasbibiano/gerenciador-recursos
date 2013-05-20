@@ -31,6 +31,7 @@
 
 					<h:column>
 						<f:facet name="header"></f:facet>
+						<h:commandLink action="#{sectorBean.showSector}" value="Detalhes" /> |
 						<h:commandLink action="#{sectorBean.editSector}" value="Editar" /> |
 						<h:commandLink action="#{sectorBean.deleteSector}" value="Remover" onclick="return confirm('Tem certeza de que deseja remover o setor?')" />
 					</h:column>
