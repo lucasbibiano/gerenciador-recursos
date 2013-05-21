@@ -30,7 +30,7 @@ public abstract class AbstractDAO<T> {
 		builder.append("(");
 		
 		String prefix = "";
-		for (Field field: className.getDeclaredFields()) {	
+		for (Field field: className.getFields()) {	
 			Column col = field.getAnnotation(Column.class);
 			
 			if (col != null) {
@@ -55,7 +55,7 @@ public abstract class AbstractDAO<T> {
 		builder.append("(");
 		
 		String prefix = "";
-		for (Field field: className.getDeclaredFields()) {			
+		for (Field field: className.getFields()) {			
 			Column col = field.getAnnotation(Column.class);
 						
 			if (col != null) {
@@ -96,7 +96,7 @@ public abstract class AbstractDAO<T> {
 	}
 
 	private void loadManyRelationships(T object) {
-		for (Field field: className.getDeclaredFields()) {			
+		for (Field field: className.getFields()) {			
 			DBCollection dbc = field.getAnnotation(DBCollection.class);
 										
 			if (dbc != null) {
@@ -129,7 +129,7 @@ public abstract class AbstractDAO<T> {
 	}
 
 	private void loadOneRelationships(T object) {
-		for (Field field: className.getDeclaredFields()) {			
+		for (Field field: className.getFields()) {			
 			ForeignKey fk = field.getAnnotation(ForeignKey.class);
 						
 			if (fk != null) {
@@ -185,7 +185,7 @@ public abstract class AbstractDAO<T> {
 			while (rs.next()) {
 				T obj = (T) className.newInstance();
 	
-				for (Field field : className.getDeclaredFields()) {
+				for (Field field : className.getFields()) {
 					Column col = field.getAnnotation(Column.class);
 	
 					if (col != null) {
@@ -227,7 +227,7 @@ public abstract class AbstractDAO<T> {
 			while (rs.next()) {
 				T obj = (T) className.newInstance();
 	
-				for (Field field : className.getDeclaredFields()) {
+				for (Field field : className.getFields()) {
 					Column col = field.getAnnotation(Column.class);
 	
 					if (col != null) {
@@ -255,7 +255,7 @@ public abstract class AbstractDAO<T> {
 		StringBuilder builder = new StringBuilder();
 				
 		String prefix = "";
-		for (Field field: className.getDeclaredFields()) {			
+		for (Field field: className.getFields()) {			
 			Column col = field.getAnnotation(Column.class);
 			
 			if (col != null) {
@@ -294,7 +294,7 @@ public abstract class AbstractDAO<T> {
 		StringBuilder builder = new StringBuilder();
 		
 		String prefix = "";
-		for (Field field: className.getDeclaredFields()) {			
+		for (Field field: className.getFields()) {			
 			Column col = field.getAnnotation(Column.class);
 						
 			if (col != null) {
@@ -360,7 +360,7 @@ public abstract class AbstractDAO<T> {
         	try {
 				T obj = (T) className.newInstance();
 				
-	            for (Field field: className.getDeclaredFields()) {			
+	            for (Field field: className.getFields()) {			
 	    			Column col = field.getAnnotation(Column.class);
 	    			
 	    			if (col != null) {
@@ -425,7 +425,7 @@ public abstract class AbstractDAO<T> {
 		StringBuilder builder = new StringBuilder();
 				
 		String prefix = "";
-		for (Field field: className.getDeclaredFields()) {			
+		for (Field field: className.getFields()) {			
 			Column col = field.getAnnotation(Column.class);
 			
 			if (col != null) {

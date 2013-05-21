@@ -8,28 +8,28 @@ import dal.annotations.Storeable;
 public class User {
 	
 	@Column(columnName = "cpf", pk = true)
-	private String cpf;
+	public String cpf;
 	
 	@Column(columnName = "name")
-	private String name;
+	public String name;
 	
 	@Column(columnName = "telephone")
-	private String telephone;
+	public String telephone;
 
 	@Column(columnName = "email")
-	private String email;
+	public String email;
 	
 	@Column(columnName = "sectorID")
-	private long sectorID;
+	public long sectorID;
 	
 	@ForeignKey(thisSideAttrs = {"sectorID"}, otherSideAttrs = {"id"})
-	private Sector sector;
+	public Sector sector;
 	
 	@Column(columnName = "functionID")
-	private long functionID;
+	public long functionID;
 	
 	@ForeignKey(thisSideAttrs = {"functionID"}, otherSideAttrs = {"id"})
-	private Function function;
+	public Function function;
 	
 	public long getSectorID() {
 		return sectorID;
