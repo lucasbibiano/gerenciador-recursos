@@ -39,7 +39,7 @@ public abstract class AbstractDAO<T> {
 				
 				builder.append(prefix);
 				prefix = ", ";
-				builder.append(field.getName());
+				builder.append(col.columnName());
 			}
 		}
 		
@@ -65,9 +65,8 @@ public abstract class AbstractDAO<T> {
 				try {
 					builder.append(prefix);
 					prefix = ", ";
-					field.setAccessible(true);
+					
 					Object obj = field.get(object);
-					field.setAccessible(false);
 					
 					if (field.getType() == String.class)
 						builder.append("'");
@@ -118,9 +117,9 @@ public abstract class AbstractDAO<T> {
 					
 					Object result = daoAux.getByAttributes(search);
 					
-					field.setAccessible(true);
+					
 					field.set(object, result);
-					field.setAccessible(false);
+					
 				} catch (IllegalAccessException | NoSuchFieldException | SecurityException | ClassNotFoundException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException | SQLException e) {
 					e.printStackTrace();
 				}				
@@ -153,9 +152,9 @@ public abstract class AbstractDAO<T> {
 					
 					Object result = daoAux.getByAttributes(search).get(0);
 					
-					field.setAccessible(true);
+					
 					field.set(object, result);
-					field.setAccessible(false);
+					
 				} catch (IllegalAccessException | NoSuchFieldException | SecurityException | ClassNotFoundException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException | SQLException e) {
 					e.printStackTrace();
 				}				
@@ -189,9 +188,9 @@ public abstract class AbstractDAO<T> {
 					Column col = field.getAnnotation(Column.class);
 	
 					if (col != null) {
-						field.setAccessible(true);
+						
 						field.set(obj, rs.getObject(col.columnName()));
-						field.setAccessible(false);
+						
 					}
 				}
 				
@@ -231,9 +230,9 @@ public abstract class AbstractDAO<T> {
 					Column col = field.getAnnotation(Column.class);
 	
 					if (col != null) {
-						field.setAccessible(true);
+						
 						field.set(obj, rs.getObject(col.columnName()));
-						field.setAccessible(false);
+						
 					}
 				}
 				
@@ -265,11 +264,10 @@ public abstract class AbstractDAO<T> {
 				try {
 					builder.append(prefix);
 					prefix = " and ";
-					field.setAccessible(true);
-					Object obj = field.get(newObject);
-					field.setAccessible(false);
 					
-					builder.append(field.getName() + "=");
+					Object obj = field.get(newObject);
+					
+					builder.append(col.columnName() + "=");
 					
 					if (field.getType() == String.class)
 						builder.append("'");
@@ -286,7 +284,7 @@ public abstract class AbstractDAO<T> {
 				}
 			}
 		}
-				
+						
 		return builder.toString();	
 	}
 	
@@ -307,7 +305,7 @@ public abstract class AbstractDAO<T> {
 					builder.append(prefix);
 					prefix = " and ";
 					
-					builder.append(field.getName() + "=");
+					builder.append(col.columnName() + "=");
 					
 					if (field.getType() == String.class)
 						builder.append("'");
@@ -322,7 +320,7 @@ public abstract class AbstractDAO<T> {
 				}
 			}
 		}
-				
+						
 		return builder.toString();
 	}
 
@@ -364,9 +362,9 @@ public abstract class AbstractDAO<T> {
 	    			Column col = field.getAnnotation(Column.class);
 	    			
 	    			if (col != null) {
-	    				field.setAccessible(true);
+	    				
 	    				field.set(obj, rs.getObject(col.columnName()));
-	    				field.setAccessible(false);
+	    				
 	    			}
 	    		}
 	            
@@ -435,11 +433,10 @@ public abstract class AbstractDAO<T> {
 				try {
 					builder.append(prefix);
 					prefix = " , ";
-					field.setAccessible(true);
-					Object obj = field.get(newObject);
-					field.setAccessible(false);
 					
-					builder.append(field.getName() + "=");
+					Object obj = field.get(newObject);		
+					
+					builder.append(col.columnName() + "=");
 					
 					if (field.getType() == String.class)
 						builder.append("'");

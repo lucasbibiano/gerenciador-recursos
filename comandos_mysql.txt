@@ -1,31 +1,117 @@
-drop table Sectors;
-drop table Functions;
-drop table Users;
+drop database openres;
+
+create database openres;
+
+use openres;
 
 CREATE TABLE Sectors (
-      id bigint NOT NULL AUTO_INCREMENT,
-      name varchar(255),
-      description varchar(255),
-PRIMARY KEY(id),
-INDEX Sector_id_INDEX (id));
+  id bigint NOT NULL AUTO_INCREMENT,
+  name varchar(255),
+  description varchar(255),
+  PRIMARY KEY(id),
+INDEX Sectors_id_INDEX (id));
+
+CREATE TABLE Permissions (
+  id bigint NOT NULL AUTO_INCREMENT,
+  name varchar(255),
+  description varchar(255),
+  PRIMARY KEY(id),
+INDEX Permissions_id_INDEX(id));
+
+#enum Activities {CADASTRAR, RESERVAR, APROVAR_RESERVA, etc...}
+CREATE TABLE Activities (
+  id bigint NOT NULL AUTO_INCREMENT,
+  name varchar(255),
+  PRIMARY KEY(id),
+INDEX Activities_id_INDEX(id));
 
 CREATE TABLE Functions (
-      id bigint NOT NULL AUTO_INCREMENT,
-      name varchar(255),
-      description varchar(255),
-      PRIMARY KEY(id),
-INDEX Function_id_INDEX (id));
+  id bigint NOT NULL AUTO_INCREMENT,
+  name varchar(255),
+  description varchar(255),
+  permissionID bigint,
+  FOREIGN KEY (permissionID) REFERENCES Permissions(id),
+  PRIMARY KEY(id),
+INDEX Functions_id_INDEX (id));
+
+CREATE TABLE Permission_Activities_with_Resources (
+  permissionID bigint,
+  activityID bigint,
+
+  #polymorphic association
+  resourceID bigint,
+  resourceType varchar(255),
+
+  FOREIGN KEY (permissionID) REFERENCES Permissions(id),
+  FOREIGN KEY (activityID) REFERENCES Activities(id),
+  #can't enforce fk constraint on polymorphic association
+
+  PRIMARY KEY(permissionID, activityID, resourceID)
+);
 
 CREATE TABLE Users (
-      cpf varchar(255) NOT NULL,
-      name varchar(255),
-      email varchar(255),
-      telephone varchar(255),
-      sectorID bigint,
-      functionID bigint,
-      FOREIGN KEY (sectorID) REFERENCES Sectors(id),
-      FOREIGN KEY (functionID) REFERENCES Functions(id),
-      PRIMARY KEY(cpf),
-INDEX User_cpf_INDEX (cpf));
+  cpf varchar(255) NOT NULL,
+  name varchar(255),
+  email varchar(255),
+  telephone varchar(255),
+  sectorID bigint,
+  functionID bigint,
+  FOREIGN KEY (sectorID) REFERENCES Sectors(id),
+  FOREIGN KEY (functionID) REFERENCES Functions(id),
+  PRIMARY KEY(cpf),
+INDEX Users_cpf_INDEX (cpf));
 
+CREATE TABLE RoomTypes (
+  id bigint NOT NULL AUTO_INCREMENT,
+  name datetime,
+  description datetime,
+INDEX RoomTypes_id_INDEX(id));
 
+CREATE TABLE Places (
+  code varchar(255) NOT NULL,
+  name varchar(255),
+  description varchar(255),
+  width int,
+  length int,
+  capacity int,
+  roomTypeID bigint NOT NULL,
+  FOREIGN KEY (roomTypeID) REFERENCES RoomTypes(id),
+  PRIMARY KEY(code),
+INDEX Places_code_INDEX(code));
+
+CREATE TABLE Services (
+  id bigint NOT NULL AUTO_INCREMENT,
+  name varchar(255),
+  description varchar(255),
+  PRIMARY KEY(id),
+INDEX Services_id_INDEX(id));
+
+CREATE TABLE Places_Services (
+  placeID bigint NOT NULL,
+  serviceID bigint NOT NULL,
+  PRIMARY KEY(placeID, serviceID)
+);
+
+CREATE TABLE Objects (
+  tomb varchar(255) NOT NULL,
+  name varchar(255),
+  description varchar(255),
+  placeCode varchar(255),
+  FOREIGN KEY (placeCode) REFERENCES Places(code),
+  PRIMARY KEY(tomb),
+INDEX Objects_id_INDEX(placeCode));
+
+CREATE TABLE Reservations (
+  id bigint NOT NULL AUTO_INCREMENT,
+  solicitation_time datetime,
+  begin_time datetime,
+  end_time datetime,
+  approved bool, #can be null if pending approval
+  userCpf varchar(255) NOT NULL,
+
+  #polymorphic association
+  resourceID bigint NOT NULL,
+  resourceType varchar(255) NOT NULL, 
+
+  PRIMARY KEY(id),
+INDEX Reservations_id_INDEX(id));
