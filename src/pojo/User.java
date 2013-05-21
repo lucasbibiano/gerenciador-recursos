@@ -25,6 +25,31 @@ public class User {
 	@ForeignKey(thisSideAttrs = {"sectorID"}, otherSideAttrs = {"id"})
 	private Sector sector;
 	
+	@Column(columnName = "functionID")
+	private long functionID;
+	
+	@ForeignKey(thisSideAttrs = {"functionID"}, otherSideAttrs = {"id"})
+	private Function function;
+	
+	
+	public long getSectorID() {
+		return sectorID;
+	}
+	public void setSectorID(long sectorID) {
+		this.sectorID = sectorID;
+	}
+	public long getFunctionID() {
+		return functionID;
+	}
+	public void setFunctionID(long functionID) {
+		this.functionID = functionID;
+	}
+	public Function getFunction() {
+		return function;
+	}
+	public void setFunction(Function function) {
+		this.function = function;
+	}
 	public String getCpf() {
 		return cpf;
 	}
@@ -40,7 +65,7 @@ public class User {
 	public String getTelephone() {
 		return telephone;
 	}
-	public void setTelefone(String telephone) {
+	public void setTelephone(String telephone) {
 		this.telephone = telephone;
 	}
 	public String getEmail() {

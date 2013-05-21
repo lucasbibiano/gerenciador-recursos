@@ -24,7 +24,7 @@ CREATE TABLE Users (
       sectorID bigint,
       functionID bigint,
       FOREIGN KEY (sectorID) REFERENCES Sectors(id),
-      FOREIGN KEY (sectorID) REFERENCES Functions(id),
+      FOREIGN KEY (functionID) REFERENCES Functions(id),
       PRIMARY KEY(cpf),
 INDEX User_cpf_INDEX (cpf));
 
