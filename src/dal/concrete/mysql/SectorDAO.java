@@ -53,5 +53,6 @@ public class SectorDAO extends AbstractDAO<Sector> {
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}	}
+		}	
+	}
 }

@@ -65,7 +65,7 @@ public class FunctionBean {
 			dao.delete(function);
 			
 			FacesContext.getCurrentInstance()
-		       .addMessage("success", new FacesMessage("Funcção deletada"));
+		       .addMessage("success", new FacesMessage("Função deletada"));
 			
 			function = new Function();
 			
@@ -107,7 +107,7 @@ public class FunctionBean {
 	public String showFunction() {
 		function = (Function) dataTable.getRowData();
 		dao.loadRelationships(function);
-		
+				
 		return "showfunction";
 	}	
 
@@ -129,6 +129,7 @@ public class FunctionBean {
 
 	public List<Function> getFunctions() {
 		try {
+			function = new Function();
 			functions = dao.getAll();
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

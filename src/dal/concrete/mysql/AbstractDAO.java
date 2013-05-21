@@ -136,7 +136,7 @@ public abstract class AbstractDAO<T> {
 				try {
 					Class<?> fkClass = field.getType();
 					
-					HashMap<String, Object> hue = new HashMap<String, Object>();
+					HashMap<String, Object> search = new HashMap<String, Object>();
 					
 					for (int i = 0; i < fk.thisSideAttrs().length; i++) {					
 						Field fieldThis = object.getClass().getDeclaredField(fk.thisSideAttrs()[i]);
@@ -145,13 +145,13 @@ public abstract class AbstractDAO<T> {
 						Object value = fieldThis.get(object);
 						fieldThis.setAccessible(false);
 						
-						hue.put(fk.otherSideAttrs()[i], value);
+						search.put(fk.otherSideAttrs()[i], value);
 					}
 									
 					Class<?> klass = Class.forName("dal.concrete.mysql." + fkClass.getSimpleName() + "DAO");
 					AbstractDAO<?> daoAux = (AbstractDAO<?>) klass.getMethod("getInstance", new Class[]{}).invoke(null, new Object[]{});
 					
-					Object result = daoAux.getByAttributes(hue).get(0);
+					Object result = daoAux.getByAttributes(search).get(0);
 					
 					field.setAccessible(true);
 					field.set(object, result);
@@ -259,7 +259,7 @@ public abstract class AbstractDAO<T> {
 			Column col = field.getAnnotation(Column.class);
 			
 			if (col != null) {
-				if (!col.pk())
+				if (onlyPk && !col.pk())
 					continue;
 				
 				try {

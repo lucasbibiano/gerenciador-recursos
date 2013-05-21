@@ -7,25 +7,32 @@
   	</ui:define>
 	<ui:define name="content">
 		<div class="container">
-			<div class="span4 offset4">
-				<h3>Cadastrando Setor</h3>
-				<h:form class="register_form">
+			<div class="row">
+				<div class="span4 offset4">
+					<h3>Editando Setor</h3>
+					<h:form class="register_form">
 
-					<h:outputLabel value="Nome do Setor" for="name" />				
-					<h:inputText id="name" class="input-block-level" value="#{sectorBean.sector.name}">
-					</h:inputText>
-					
-					<h:outputLabel value="Descrição" for="desc" />				
-					<h:inputTextarea id="desc" class="input-block-level" value="#{sectorBean.sector.description}"
-					 rows="4" >
-					</h:inputTextarea>
-					<br/>					
+						<h:outputLabel value="Nome do Setor" for="name" />
+						<h:inputText id="name" class="input-block-level"
+							value="#{sectorBean.sector.name}">
+						</h:inputText>
 
-					<h:commandButton value="Editar" type="submit" class="btn" action="#{sectorBean.updateSector}">
-					</h:commandButton>										
-				</h:form>
+						<h:outputLabel value="Descrição" for="desc" />
+						<h:inputTextarea id="desc" class="input-block-level"
+							value="#{sectorBean.sector.description}" rows="4">
+						</h:inputTextarea>
+						<br />
+
+						<h:commandButton value="Editar" type="submit" class="btn"
+							action="#{sectorBean.updateSector}">
+						</h:commandButton>
+					</h:form>
+				</div>
 			</div>
-		</div>		
+
+			<h:link value="Voltar para a listagem de setores"
+				outcome="allsectors.xhtml" />
+		</div>
 	</ui:define>
 </ui:composition>
 

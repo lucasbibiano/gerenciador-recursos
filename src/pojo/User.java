@@ -31,7 +31,6 @@ public class User {
 	@ForeignKey(thisSideAttrs = {"functionID"}, otherSideAttrs = {"id"})
 	private Function function;
 	
-	
 	public long getSectorID() {
 		return sectorID;
 	}

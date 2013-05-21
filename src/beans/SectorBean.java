@@ -122,6 +122,7 @@ public class SectorBean {
 
 	public List<Sector> getSectors() {
 		try {
+			sector = new Sector();
 			sectors = dao.getAll();
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

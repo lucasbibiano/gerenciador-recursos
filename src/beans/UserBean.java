@@ -118,6 +118,7 @@ public class UserBean {
 
 	public List<User> getUsers() {
 		try {
+			user = new User();
 			users = dao.getAll();
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();

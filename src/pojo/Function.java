@@ -17,7 +17,7 @@ public class Function {
 	@Column(columnName = "description")
 	private String description;
 	
-	@DBCollection(klass = User.class, fk = {"cpf"}, thisPk = {"id"})
+	@DBCollection(klass = User.class, thisPk = {"id"}, fk = {"functionID"})
 	private List<User> usersWithThatFunction;
 
 	public long getId() {

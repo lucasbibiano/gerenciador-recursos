@@ -2,55 +2,59 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/templates/main_template.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core">
+	xmlns:f="http://java.sun.com/jsf/core">
 	<ui:define name="title">
-      #{appBean.pageTitle("Novo Usuário")}
+      #{appBean.pageTitle("Editando Usuário")}
     </ui:define>
 	<ui:define name="content">
 		<div class="container">
-			<div class="span4 offset4">
-				<h3>Editar Usuário</h3>
+			<div class="row">
+				<div class="span4 offset4">
+					<h3>Editar Usuário</h3>
 
-				<h:form>
-					<h:outputLabel value="Nome" for="name" />
-					<h:inputText id="name" class="input-block-level"
-						value="#{userBean.user.name}">
-					</h:inputText>
+					<h:form>
+						<h:outputLabel value="Nome" for="name" />
+						<h:inputText id="name" class="input-block-level"
+							value="#{userBean.user.name}">
+						</h:inputText>
 
-					<h:outputLabel value="CPF" for="cpf" />
-					<h:inputText id="cpf" class="input-block-level"
-						value="#{userBean.user.cpf}">
-					</h:inputText>
+						<h:outputLabel value="CPF" for="cpf" />
+						<h:inputText id="cpf" class="input-block-level"
+							value="#{userBean.user.cpf}">
+						</h:inputText>
 
-					<h:outputLabel value="Email" for="email" />
-					<h:inputText id="email" class="input-block-level"
-						value="#{userBean.user.email}">
-					</h:inputText>
+						<h:outputLabel value="Email" for="email" />
+						<h:inputText id="email" class="input-block-level"
+							value="#{userBean.user.email}">
+						</h:inputText>
 
-					<h:outputLabel value="Telefone" for="phone" />
-					<h:inputText id="phone" class="input-block-level"
-						value="#{userBean.user.telephone}">
-					</h:inputText>
+						<h:outputLabel value="Telefone" for="phone" />
+						<h:inputText id="phone" class="input-block-level"
+							value="#{userBean.user.telephone}">
+						</h:inputText>
 
-					<h:outputLabel value="Setor" for="sect" />
-					<h:selectOneMenu value="#{userBean.user.sectorID}" id="sect">
-						<f:selectItems value="#{sectorBean.sectors}" var="sector" 
-            				itemValue="#{sector.id}" itemLabel="#{sector.name}" />
-					</h:selectOneMenu>
+						<h:outputLabel value="Setor" for="sect" />
+						<h:selectOneMenu value="#{userBean.user.sectorID}" id="sect">
+							<f:selectItems value="#{sectorBean.sectors}" var="sector"
+								itemValue="#{sector.id}" itemLabel="#{sector.name}" />
+						</h:selectOneMenu>
 
-					<h:outputLabel value="Função" for="func" />
-					<h:selectOneMenu value="#{userBean.user.functionID}" id="func">
-						<f:selectItems value="#{functionBean.functions}" var="funct" 
-            				itemValue="#{funct.id}" itemLabel="#{funct.name}" />
-					</h:selectOneMenu>
-					
-					<br/>
+						<h:outputLabel value="Função" for="func" />
+						<h:selectOneMenu value="#{userBean.user.functionID}" id="func">
+							<f:selectItems value="#{functionBean.functions}" var="funct"
+								itemValue="#{funct.id}" itemLabel="#{funct.name}" />
+						</h:selectOneMenu>
 
-					<h:commandButton value="Editar" type="submit" class="btn"
-						action="#{userBean.updateUser}">
-					</h:commandButton>
-				</h:form>
+						<br />
+
+						<h:commandButton value="Editar" type="submit" class="btn"
+							action="#{userBean.updateUser}">
+						</h:commandButton>
+					</h:form>
+				</div>
 			</div>
+			
+			<h:link value="Voltar para a listagem de usuários" outcome="allusers.xhtml"></h:link>
 		</div>
 	</ui:define>
 </ui:composition>
