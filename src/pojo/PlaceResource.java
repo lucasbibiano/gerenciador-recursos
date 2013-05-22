@@ -29,7 +29,7 @@ public class PlaceResource extends Resource {
 	public int capacity;
 	
 	@Column(columnName = "roomTypeID")
-	public int roomTypeID;
+	public long roomTypeID;
 	@ForeignKey(thisSideAttrs = {"roomTypeID"}, otherSideAttrs = {"id"})
 	public RoomType roomType;
 	
@@ -89,11 +89,11 @@ public class PlaceResource extends Resource {
 		this.capacity = capacity;
 	}
 
-	public int getRoomTypeID() {
+	public long getRoomTypeID() {
 		return roomTypeID;
 	}
 
-	public void setRoomTypeID(int roomTypeID) {
+	public void setRoomTypeID(long roomTypeID) {
 		this.roomTypeID = roomTypeID;
 	}
 

@@ -23,6 +23,7 @@ public class ObjectResource extends Resource {
 	public String allocatedAtCode;
 	@ForeignKey(thisSideAttrs = {"tombamento"}, otherSideAttrs = {"code"})
 	public PlaceResource allocatedAt;
+	
 	public long getId() {
 		return id;
 	}

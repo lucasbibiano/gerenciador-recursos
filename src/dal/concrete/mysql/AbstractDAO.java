@@ -6,6 +6,7 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 import dal.annotations.Column;
 import dal.annotations.DBCollection;
 import dal.annotations.ForeignKey;
+import dal.annotations.Polymorphic;
 import dal.annotations.Storeable;
 import dal.connection.ConnectionManager;
 
@@ -22,6 +24,10 @@ public abstract class AbstractDAO<T> {
 	
 	public AbstractDAO(Class<?> klass) {
 		className = klass;
+	}
+	
+	public String getTableName() {
+		return className.getAnnotation(Storeable.class).tableName();
 	}
 	
 	private String createAttributesString() {
@@ -68,12 +74,12 @@ public abstract class AbstractDAO<T> {
 					
 					Object obj = field.get(object);
 					
-					if (field.getType() == String.class)
+					if (field.getType() == String.class || field.getType() == Timestamp.class)
 						builder.append("'");
 					
-					builder.append(obj.toString());
+					builder.append(obj);
 					
-					if (field.getType() == String.class)
+					if (field.getType() == String.class || field.getType() == Timestamp.class)
 						builder.append("'");
 					
 				} catch (IllegalArgumentException e) {
@@ -92,6 +98,41 @@ public abstract class AbstractDAO<T> {
 	public void loadRelationships(T object) {
 		loadOneRelationships(object);
 		loadManyRelationships(object);
+		loadPolymorphicRelationShips(object);
+	}
+
+	private void loadPolymorphicRelationShips(T object) {
+		for (Field field: className.getFields()) {			
+			Polymorphic pol = field.getAnnotation(Polymorphic.class);
+						
+			if (pol != null) {				
+				try {				
+					HashMap<String, Object> search = new HashMap<String, Object>();
+					
+					for (int i = 0; i < pol.fk().thisSideAttrs().length; i++) {					
+						Field fieldThis = object.getClass().getDeclaredField(pol.fk().thisSideAttrs()[i]);
+						
+						fieldThis.setAccessible(true);
+						Object value = fieldThis.get(object);
+						fieldThis.setAccessible(false);
+						
+						search.put(pol.fk().otherSideAttrs()[i], value);
+					}
+					
+					String otherTable = (String) className.getField(pol.tableAttr()).get(object);
+									
+					Class<?> klass = Class.forName("dal.concrete.mysql." + otherTable + "DAO");
+					AbstractDAO<?> daoAux = (AbstractDAO<?>) klass.getMethod("getInstance", new Class[]{}).invoke(null, new Object[]{});
+					
+					Object result = daoAux.getByAttributes(search).get(0);
+					
+					field.set(object, result);
+					
+				} catch (IllegalAccessException | NoSuchFieldException | SecurityException | ClassNotFoundException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException | SQLException e) {
+					e.printStackTrace();
+				}				
+			}
+		}
 	}
 
 	private void loadManyRelationships(T object) {
@@ -160,10 +201,6 @@ public abstract class AbstractDAO<T> {
 				}				
 			}
 		}
-	}
-	
-	public String getTableName() {
-		return className.getAnnotation(Storeable.class).tableName();
 	}
 
 	public T getByPk(T object) throws SQLException, ClassNotFoundException {
@@ -269,12 +306,12 @@ public abstract class AbstractDAO<T> {
 					
 					builder.append(col.columnName() + "=");
 					
-					if (field.getType() == String.class)
+					if (field.getType() == String.class || field.getType() == Timestamp.class)
 						builder.append("'");
 					
 					builder.append(obj.toString());
 					
-					if (field.getType() == String.class)
+					if (field.getType() == String.class || field.getType() == Timestamp.class)
 						builder.append("'");
 					
 				} catch (IllegalArgumentException e) {
@@ -307,12 +344,12 @@ public abstract class AbstractDAO<T> {
 					
 					builder.append(col.columnName() + "=");
 					
-					if (field.getType() == String.class)
+					if (field.getType() == String.class || field.getType() == Timestamp.class)
 						builder.append("'");
 					
 					builder.append(obj.toString());
 					
-					if (field.getType() == String.class)
+					if (field.getType() == String.class || field.getType() == Timestamp.class)
 						builder.append("'");
 					
 				} catch (IllegalArgumentException e) {
@@ -438,12 +475,12 @@ public abstract class AbstractDAO<T> {
 					
 					builder.append(col.columnName() + "=");
 					
-					if (field.getType() == String.class)
+					if (field.getType() == String.class || field.getType() == Timestamp.class)
 						builder.append("'");
 					
 					builder.append(obj.toString());
 					
-					if (field.getType() == String.class)
+					if (field.getType() == String.class || field.getType() == Timestamp.class)
 						builder.append("'");
 					
 				} catch (IllegalArgumentException e) {

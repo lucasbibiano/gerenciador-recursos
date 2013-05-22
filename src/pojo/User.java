@@ -28,6 +28,7 @@ public class User {
 	public long functionID;
 	@ForeignKey(thisSideAttrs = {"functionID"}, otherSideAttrs = {"id"})
 	public Function function;
+	
 	public String getCpf() {
 		return cpf;
 	}
