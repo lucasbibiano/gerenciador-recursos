@@ -27,8 +27,6 @@ public class PlaceResourceDAO extends AbstractDAO<PlaceResource> {
 		hue.code = "heuheuheu";
 		hue.length = 332;
 		hue.width = 34432;
-		hue.reservable = true;
-
 		
 		try {
 			dao.create(hue);

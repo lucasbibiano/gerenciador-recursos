@@ -21,34 +21,13 @@ public class User {
 	
 	@Column(columnName = "sectorID")
 	public long sectorID;
-	
 	@ForeignKey(thisSideAttrs = {"sectorID"}, otherSideAttrs = {"id"})
 	public Sector sector;
 	
 	@Column(columnName = "functionID")
 	public long functionID;
-	
 	@ForeignKey(thisSideAttrs = {"functionID"}, otherSideAttrs = {"id"})
 	public Function function;
-	
-	public long getSectorID() {
-		return sectorID;
-	}
-	public void setSectorID(long sectorID) {
-		this.sectorID = sectorID;
-	}
-	public long getFunctionID() {
-		return functionID;
-	}
-	public void setFunctionID(long functionID) {
-		this.functionID = functionID;
-	}
-	public Function getFunction() {
-		return function;
-	}
-	public void setFunction(Function function) {
-		this.function = function;
-	}
 	public String getCpf() {
 		return cpf;
 	}
@@ -73,10 +52,23 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public long getSectorID() {
+		return sectorID;
+	}
+	public void setSectorID(long sectorID) {
+		this.sectorID = sectorID;
+	}
 	public Sector getSector() {
 		return sector;
 	}
-	public void setSector(Sector sector) {
-		this.sector = sector;
+	public long getFunctionID() {
+		return functionID;
 	}
+	public void setFunctionID(long functionID) {
+		this.functionID = functionID;
+	}
+	public Function getFunction() {
+		return function;
+	}
+	
 }

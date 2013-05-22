@@ -20,30 +20,34 @@ public class Sector {
 	
 	@DBCollection(klass = User.class, thisPk = {"id"}, fk = {"sectorID"})
 	public List<User> users;
-	
-	public String toString() {
-		return "id = " + id + "; name = " + name + "; description = " + description;
-	}
-	
+
 	public long getId() {
 		return id;
 	}
+
 	public void setId(long id) {
 		this.id = id;
 	}
-	public String getDescription() {
-		return description;
-	}
-	public void setDescription(String description) {
-		this.description = description;
-	}
+
 	public String getName() {
 		return name;
 	}
+
 	public void setName(String name) {
 		this.name = name;
 	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public List<User> getUsers() {
 		return users;
 	}
+	
+	
 }
