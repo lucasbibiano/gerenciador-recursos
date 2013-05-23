@@ -19,9 +19,9 @@ public class ObjectResource implements Resource {
 	@Column(columnName = "description")
 	public String description;
 	
-	@Column(columnName = "placeCode")
-	public String allocatedAtCode;
-	@ForeignKey(thisSideAttrs = {"tombamento"}, otherSideAttrs = {"code"})
+	@Column(columnName = "placeID")
+	public long allocatedAtID;
+	@ForeignKey(thisSideAttrs = {"placeID"}, otherSideAttrs = {"id"})
 	public PlaceResource allocatedAt;
 	
 	public long getId() {
@@ -48,11 +48,11 @@ public class ObjectResource implements Resource {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public String getAllocatedAtCode() {
-		return allocatedAtCode;
+	public long getAllocatedAtID() {
+		return allocatedAtID;
 	}
-	public void setAllocatedAtCode(String allocatedAtCode) {
-		this.allocatedAtCode = allocatedAtCode;
+	public void setAllocatedAtID(long allocatedAtID) {
+		this.allocatedAtID = allocatedAtID;
 	}
 	public PlaceResource getAllocatedAt() {
 		return allocatedAt;

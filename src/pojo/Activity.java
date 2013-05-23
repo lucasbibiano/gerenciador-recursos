@@ -9,5 +9,5 @@ public class Activity {
 	public long id;
 	
 	@Column(columnName = "name")
-	public long name;
+	public String name;
 }

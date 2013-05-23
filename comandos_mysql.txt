@@ -98,10 +98,10 @@ CREATE TABLE Objects (
   tomb varchar(255) UNIQUE NOT NULL,
   name varchar(255),
   description varchar(255),
-  placeCode varchar(255),
-  FOREIGN KEY (placeCode) REFERENCES Places(code),
+  placeID bigint,
+  FOREIGN KEY (placeID) REFERENCES Places(id),
   PRIMARY KEY(id),
-INDEX Objects_id_INDEX(placeCode));
+INDEX Objects_id_INDEX(id));
 
 CREATE TABLE Reservations (
   id bigint NOT NULL AUTO_INCREMENT,
