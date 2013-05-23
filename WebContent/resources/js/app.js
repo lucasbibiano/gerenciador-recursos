@@ -1,10 +1,8 @@
 $(document).ready(function() {
 	var url = window.location.href;
-	url = url.substr(url.indexOf("/") + 1);
-	url = url.substr(url.indexOf("/") + 1);
-	url = url.substr(url.indexOf("/"));
 	
-	$('.hue').text(url);
+	url = url.substr(37, url.length);
+	url = url.substr(0, url.indexOf("/"));
 	
-	$(".subnav").find("li:has(a[href='" + url + "'])").addClass("active");
+	$(".subnav").find("li:has(a[href*='" + url + "'])").addClass("active");
 });
