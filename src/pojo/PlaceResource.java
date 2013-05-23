@@ -5,7 +5,7 @@ import dal.annotations.ForeignKey;
 import dal.annotations.Storeable;
 
 @Storeable(tableName = "Places")
-public class PlaceResource extends Resource {
+public class PlaceResource implements Resource {
 	
 	@Column(columnName = "id", pk = true)
 	public long id;

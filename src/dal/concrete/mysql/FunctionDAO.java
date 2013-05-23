@@ -1,5 +1,6 @@
 package dal.concrete.mysql;
 
+import dal._abstract.mysql.AbstractDAO;
 import pojo.Function;
 
 public class FunctionDAO extends AbstractDAO<Function>{

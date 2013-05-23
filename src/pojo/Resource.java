@@ -1,4 +1,4 @@
 package pojo;
 
-public class Resource {
+public interface Resource {
 }

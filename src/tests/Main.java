@@ -78,12 +78,8 @@ public class Main {
 		reser.resourceID = PlaceResourceDAO.getInstance().getAll().get(0).id;
 				
 		ReservationDAO.getInstance().create(reser);
-		
-		/**************************************/
-		
 		ReservationDAO.getInstance().loadRelationships(reser);
 		
-		System.out.println(reser.user.cpf);		
-		System.out.println(reser.resource);
+		/**************************************/
 	}
 }

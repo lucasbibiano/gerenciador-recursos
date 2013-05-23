@@ -3,6 +3,8 @@ package dal.concrete.mysql;
 import java.sql.SQLException;
 import java.util.List;
 
+import dal._abstract.mysql.AbstractDAO;
+
 import pojo.User;
 
 public class UserDAO extends AbstractDAO<User>{

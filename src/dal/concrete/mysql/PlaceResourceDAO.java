@@ -2,6 +2,8 @@ package dal.concrete.mysql;
 
 import java.sql.SQLException;
 
+import dal._abstract.mysql.AbstractDAO;
+
 import pojo.PlaceResource;
 import pojo.RoomType;
 

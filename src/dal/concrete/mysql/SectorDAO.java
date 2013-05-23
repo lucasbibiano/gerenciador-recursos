@@ -4,6 +4,8 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 
+import dal._abstract.mysql.AbstractDAO;
+
 import pojo.Sector;
 import pojo.User;
 

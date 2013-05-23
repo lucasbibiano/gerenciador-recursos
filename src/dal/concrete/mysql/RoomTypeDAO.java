@@ -1,5 +1,6 @@
 package dal.concrete.mysql;
 
+import dal._abstract.mysql.AbstractDAO;
 import pojo.RoomType;
 
 public class RoomTypeDAO extends AbstractDAO<RoomType> {

@@ -1,4 +1,4 @@
-package dal.concrete.mysql;
+package dal._abstract.mysql;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;

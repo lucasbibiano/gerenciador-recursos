@@ -1,8 +1,6 @@
 package dal.concrete.mysql;
 
-import java.sql.SQLException;
-import java.sql.Timestamp;
-import java.util.Calendar;
+import dal._abstract.mysql.AbstractDAO;
 
 import pojo.Reservation;
 

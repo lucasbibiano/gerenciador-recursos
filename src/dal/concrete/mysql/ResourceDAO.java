@@ -1,5 +1,6 @@
 package dal.concrete.mysql;
 
+import dal._abstract.mysql.AbstractDAO;
 import pojo.Resource;
 
 public class ResourceDAO extends AbstractDAO<Resource> {
