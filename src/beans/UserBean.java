@@ -10,11 +10,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 
-import pojo.Function;
-import pojo.Sector;
 import pojo.User;
-import dal.concrete.mysql.FunctionDAO;
-import dal.concrete.mysql.SectorDAO;
 import dal.concrete.mysql.UserDAO;
 
 @ManagedBean(name = "userBean")

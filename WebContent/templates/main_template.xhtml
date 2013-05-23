@@ -14,8 +14,14 @@
 	<ui:insert name="navbar">
 		<ui:include src="/partials/navbar.xhtml" />
 	</ui:insert>
+		
+	<h:messages />
 	
-	<h:messages /> 
+	<div class="container">
+		<ui:insert name="subnav">
+			<ui:include src="/partials/subnav.xhtml" />
+		</ui:insert> 
+	</div>
 	
 	<ui:insert name="content">
 	</ui:insert>
@@ -25,6 +31,7 @@
 	</ui:insert>
 
 	<h:outputScript name="js/jquery.min.js"></h:outputScript>
+	<h:outputScript name="js/app.js"></h:outputScript>
 	<h:outputScript name="js/bootstrap.min.js"></h:outputScript>
 </h:body>
 </html>
