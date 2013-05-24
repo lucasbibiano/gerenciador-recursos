@@ -228,9 +228,7 @@ public abstract class AbstractDAO<T> {
 					
 					Object result = daoAux.getByAttributes(search);
 					
-					
 					field.set(object, result);
-					
 				} catch (IllegalAccessException | NoSuchFieldException | SecurityException | ClassNotFoundException | NoSuchMethodException | IllegalArgumentException | InvocationTargetException | SQLException e) {
 					e.printStackTrace();
 				}				

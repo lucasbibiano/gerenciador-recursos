@@ -1,7 +1,6 @@
 package beans;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,9 +40,7 @@ public class PlaceResourceBean {
 	public String addPlaceResource() {			
 		try {
 			long hue = dao.create(place);
-			
-			System.out.println("DEBUG: >>>>" + hue);
-			
+						
 			for (Long serviceID: servicesID) {
 				PlacesServices ps = new PlacesServices();
 				ps.placeID = hue;

@@ -3,6 +3,7 @@ package pojo;
 import java.util.List;
 
 import dal.annotations.Column;
+import dal.annotations.DBCollection;
 import dal.annotations.ForeignKey;
 import dal.annotations.ManyToMany;
 import dal.annotations.Storeable;
@@ -39,6 +40,9 @@ public class PlaceResource implements Resource {
 	@ManyToMany(onTable = "Places_Services", otherClass = ServiceResource.class,
 		thisPK = {"id"}, thisPKOtherSide = {"placeID"}, otherPK = {"id"}, otherPKOtherSide = {"serviceID"})
 	public List<ServiceResource> services;
+	
+	@DBCollection(klass = ObjectResource.class, thisPk = {"id"}, fk = {"allocatedAtID"})
+	public List<ObjectResource> objectsAllocated;
 		
 	public List<ServiceResource> getServices() {
 		return services;
@@ -114,5 +118,9 @@ public class PlaceResource implements Resource {
 
 	public RoomType getRoomType() {
 		return roomType;
+	}
+
+	public List<ObjectResource> getObjectsAllocated() {
+		return objectsAllocated;
 	}
 }

@@ -1,0 +1,69 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/main_template.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:define name="title">
+    	#{appBean.pageTitle("Exibir detalhes do recurso espaço")}
+  	</ui:define>
+	<ui:define name="content">
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+					<h3>Detalhes do recurso espaço</h3>
+
+					<p>Nome: #{placeResourceBean.placeResource.name}</p>
+					<p>Descrição: #{placeResourceBean.placeResource.description}</p>
+
+					<h4>Serviços disponíveis para a sala:</h4>
+
+					<h:dataTable value="#{placeResourceBean.placeResource.services}"
+						var="serv" class="table table-bordered table-striped table-hover">
+						<h:column>
+							<f:facet name="header">#</f:facet>
+    					#{serv.id}
+    				</h:column>
+
+						<h:column>
+							<f:facet name="header">Nome</f:facet>
+	    				#{serv.name}
+	    			</h:column>
+
+						<h:column>
+							<f:facet name="header">Descrição</f:facet>
+	    				#{serv.description}
+	    			</h:column>
+
+					</h:dataTable>
+
+					<h4>Objetos alocados na sala</h4>
+
+					<h:dataTable value="#{placeResourceBean.placeResource.objectsAllocated}"
+						var="obj" class="table table-bordered table-striped table-hover">
+						<h:column>
+							<f:facet name="header">#</f:facet>
+    					#{obj.id}
+    				</h:column>
+
+						<h:column>
+							<f:facet name="header">Tombamento</f:facet>
+	    				#{obj.tombamento}
+	    			</h:column>
+
+						<h:column>
+							<f:facet name="header">Nome</f:facet>
+	    				#{obj.name}
+	    			</h:column>
+
+					</h:dataTable>
+
+					<h:link value="Voltar para a listagem de recursos espaço"
+						outcome="allplaceresources.xhtml" />
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+
+
+
