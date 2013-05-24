@@ -1,0 +1,53 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/templates/main_template.xhtml"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:define name="title">
+    	#{appBean.pageTitle("Editando recurso objeto")}
+  	</ui:define>
+	<ui:define name="content">
+		<div class="container">
+			<div class="row">
+				<div class="span4 offset4">
+					<h3>Editando recurso objeto</h3>
+					<h:form class="register_form">
+
+						<h:outputLabel value="Tombamento" for="tomb" />
+						<h:inputText id="tomb" class="input-block-level"
+							value="#{objectResourceBean.objectResource.tombamento}">
+						</h:inputText>
+
+						<h:outputLabel value="Nome do recurso" for="name" />
+						<h:inputText id="name" class="input-block-level"
+							value="#{objectResourceBean.objectResource.name}">
+						</h:inputText>
+
+						<h:outputLabel value="Descrição" for="desc" />
+						<h:inputTextarea id="desc" class="input-block-level"
+							value="#{objectResourceBean.objectResource.description}" rows="4">
+						</h:inputTextarea>
+
+						<h:outputLabel value="Alocado no(a)" for="place" />
+						<h:selectOneMenu
+							value="#{objectResourceBean.objectResource.allocatedAtID}"
+							id="place">
+							<f:selectItems value="#{placeResourceBean.placeResources}"
+								var="place" itemValue="#{place.id}"
+								itemLabel="#{place.fullName}" />
+						</h:selectOneMenu>
+						<br />
+						
+						<h:commandButton value="Cadastrar" type="submit" class="btn"
+							action="#{objectResourceBean.updateObjectResource}">
+						</h:commandButton>
+					</h:form>
+				</div>
+			</div>
+
+			<h:link value="Voltar para a listagem de recursos objeto"
+				outcome="allobjectresources.xhtml" />
+		</div>
+	</ui:define>
+</ui:composition>
+

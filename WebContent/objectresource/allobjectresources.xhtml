@@ -9,37 +9,42 @@
 	<ui:define name="content">
 		<div class="container">
 			<h:form>
-				<h3>Lista de Tipos de sala</h3>
+				<h3>Lista de Recursos Objeto</h3>
 
-				<h:dataTable binding="#{roomTypeBean.dataTable}"
-					value="#{roomTypeBean.roomTypes}" var="rt"
+				<h:dataTable binding="#{objectResourceBean.dataTable}"
+					value="#{objectResourceBean.objectResources}" var="obj"
 					class="table table-bordered table-striped table-hover">
 					<h:column>
 						<f:facet name="header">#</f:facet>
-    					#{rt.id}
+    					#{obj.id}
     				</h:column>
 
 					<h:column>
+						<f:facet name="header">Tombamento</f:facet>
+	    				#{obj.tombamento}
+	    			</h:column>
+
+					<h:column>
 						<f:facet name="header">Nome</f:facet>
-	    				#{rt.name}
+	    				#{obj.name}
 	    			</h:column>
 
 					<h:column>
 						<f:facet name="header">Descrição</f:facet>
-	    				#{rt.description}
+	    				#{obj.description}
 	    			</h:column>
 
 					<h:column>
 						<f:facet name="header"></f:facet>
-						<h:commandLink action="#{roomTypeBean.showRoomType}" value="Detalhes" /> |
-						<h:commandLink action="#{roomTypeBean.editRoomType}" value="Editar" /> |
-						<h:commandLink action="#{roomTypeBean.deleteRoomType}" value="Remover" onclick="return confirm('Tem certeza de que deseja remover o tipo de sala?')" />
+						<h:commandLink action="#{objectResourceBean.showObjectResource}" value="Detalhes" /> |
+						<h:commandLink action="#{objectResourceBean.editObjectResource}" value="Editar" /> |
+						<h:commandLink action="#{objectResourceBean.deleteObjectResource}" value="Remover" onclick="return confirm('Tem certeza de que deseja remover o tipo de sala?')" />
 					</h:column>
 
 				</h:dataTable>
 			</h:form>		
 			
-			<a href="/Open-Res/faces/roomtype/newroomtype.xhtml">Novo tipo de sala</a>
+			<a href="/Open-Res/faces/objectresource/newobjectresource.xhtml">Novo recurso objeto</a>
 		</div>
 	</ui:define>
 </ui:composition>

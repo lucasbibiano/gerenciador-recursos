@@ -33,6 +33,10 @@ public class PlaceResource implements Resource {
 	@ForeignKey(thisSideAttrs = {"roomTypeID"}, otherSideAttrs = {"id"})
 	public RoomType roomType;
 	
+	public String getFullName() {
+		return name + " " + code;
+	}
+	
 	public long getId() {
 		return id;
 	}

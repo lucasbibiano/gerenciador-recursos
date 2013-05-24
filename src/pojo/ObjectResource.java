@@ -21,7 +21,7 @@ public class ObjectResource implements Resource {
 	
 	@Column(columnName = "placeID")
 	public long allocatedAtID;
-	@ForeignKey(thisSideAttrs = {"placeID"}, otherSideAttrs = {"id"})
+	@ForeignKey(thisSideAttrs = {"allocatedAtID"}, otherSideAttrs = {"id"})
 	public PlaceResource allocatedAt;
 	
 	public long getId() {

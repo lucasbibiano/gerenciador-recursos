@@ -1,0 +1,25 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/templates/main_template.xhtml"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:define name="title">
+    	#{appBean.pageTitle("Detalhes recurso objeto")}
+  	</ui:define>
+	<ui:define name="content">
+		<div class="container">
+			<div class="row">
+				<div class="span12">					
+					<p>Tombamento: #{objectResourceBean.objectResource.tombamento}</p>
+					<p>Nome: #{objectResourceBean.objectResource.name}</p>
+					<p>Descrição: #{objectResourceBean.objectResource.description}</p>
+					<p>Alocado em: #{objectResourceBean.objectResource.allocatedAt.fullName}</p>
+				</div>
+			</div>
+
+			<h:link value="Voltar para a listagem de recursos objeto"
+				outcome="allobjectresources.xhtml" />
+		</div>
+	</ui:define>
+</ui:composition>
+
