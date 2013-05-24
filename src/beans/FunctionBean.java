@@ -6,7 +6,7 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
 import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 
@@ -14,7 +14,7 @@ import pojo.Function;
 import dal.concrete.mysql.FunctionDAO;
 
 @ManagedBean(name = "functionBean")
-@RequestScoped
+@SessionScoped
 public class FunctionBean {
 	
 	private Function function;

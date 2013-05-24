@@ -4,7 +4,6 @@ import java.sql.Timestamp;
 
 import dal.annotations.Column;
 import dal.annotations.ForeignKey;
-import dal.annotations.Polymorphic;
 import dal.annotations.Storeable;
 
 @Storeable(tableName = "Reservations")
@@ -32,14 +31,6 @@ public class Reservation {
 	public String userCpf;
 	@ForeignKey(thisSideAttrs = {"userCpf"}, otherSideAttrs = {"cpf"})
 	public User user;
-	
-	@Column(columnName = "resourceID")
-	public long resourceID;
-	@Column(columnName = "resourceType")
-	public String resourceType;
-	@Polymorphic(tableAttr = "resourceType",
-		fk = @ForeignKey(thisSideAttrs = {"resourceID"}, otherSideAttrs = {"id"}))
-	public Resource resource;
 	
 	public long getId() {
 		return id;
@@ -88,18 +79,6 @@ public class Reservation {
 	}
 	public void setUser(User user) {
 		this.user = user;
-	}
-	public long getResourceID() {
-		return resourceID;
-	}
-	public void setResourceID(long resourceID) {
-		this.resourceID = resourceID;
-	}
-	public Resource getResource() {
-		return resource;
-	}
-	public void setResource(Resource resource) {
-		this.resource = resource;
 	}
 	
 	

@@ -1,26 +1,38 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:ui="http://java.sun.com/jsf/facelets"
-  template="/templates/main_template.xhtml">
-  <ui:define name="title">
-      #{appBean.pageTitle("Novo tipo de Sala")}
-    </ui:define>
-  <ui:define name="content">
-    <div class="container">
-      <div class="span4 offset4">
-        <h3>Cadastrando Tipo de Sala</h3>
-        <div class="register_form">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/templates/main_template.xhtml">
+	<ui:define name="title">
+    	#{appBean.pageTitle("Novo tipo de sala")}
+  	</ui:define>
+	<ui:define name="content">
+		<div class="container">
+			<div class="row">
+				<div class="span4 offset4">
+					<h3>Cadastrando tipo de sala</h3>
+					<h:form class="register_form">
 
-          <label class="control-label" for="input01">Nome do tipo de Sala</label> <input
-            type="text" class="input-block-level" /> <label
-            class="control-label" for="input01">Descrição</label>
-          <textarea class="input-block-level" id="textarea" rows="4"></textarea>
-          <br />
+						<h:outputLabel value="Nome do Setor" for="name" />
+						<h:inputText id="name" class="input-block-level"
+							value="#{roomTypeBean.roomType.name}">
+						</h:inputText>
 
-          <button type="submit" class="btn">Cadastrar</button>
-          <button type="submit" class="btn">Cancelar</button>
-        </div>
-      </div>
-    </div>
-  </ui:define>
+						<h:outputLabel value="Descrição" for="desc" />
+						<h:inputTextarea id="desc" class="input-block-level"
+							value="#{roomTypeBean.roomType.description}" rows="4">
+						</h:inputTextarea>
+						<br />
+
+						<h:commandButton value="Cadastrar" type="submit" class="btn"
+							action="#{roomTypeBean.addRoomType}">
+						</h:commandButton>
+					</h:form>
+				</div>
+			</div>
+
+			<h:link value="Voltar para a listagem de tipos de sala"
+				outcome="allroomtypes.xhtml" />
+		</div>
+	</ui:define>
 </ui:composition>
 

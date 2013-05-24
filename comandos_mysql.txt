@@ -90,6 +90,10 @@ INDEX Services_id_INDEX(id));
 CREATE TABLE Places_Services (
   placeID bigint NOT NULL,
   serviceID bigint NOT NULL,
+
+  FOREIGN KEY(placeID) REFERENCES Places(id),
+  FOREIGN KEY(serviceID) REFERENCES Services(id),
+
   PRIMARY KEY(placeID, serviceID)
 );
 
@@ -112,9 +116,15 @@ CREATE TABLE Reservations (
   pendingApproval bool,
   userCpf varchar(255) NOT NULL,
 
-  #polymorphic association
-  resourceID bigint NOT NULL,
-  resourceType varchar(255) NOT NULL, 
-
   PRIMARY KEY(id),
 INDEX Reservations_id_INDEX(id));
+
+CREATE TABLE Reservations_Resources (
+  reservationID bigint,
+
+  resourceID bigint,
+  resourceType varchar(255),
+
+  FOREIGN KEY (reservationID) REFERENCES Reservations(id),
+  PRIMARY KEY(reservationID, resourceID)
+);

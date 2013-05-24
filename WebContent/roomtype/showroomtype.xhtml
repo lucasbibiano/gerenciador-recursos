@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/main_template.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:define name="title">
+    	#{appBean.pageTitle("Exibir detalhes do tipo de sala")}
+  	</ui:define>
+	<ui:define name="content">
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+					<h3>Detalhes do tipo de sala</h3>
+
+					<p>Nome: #{roomTypeBean.roomType.name}</p>
+					<p>Descrição: #{roomTypeBean.roomType.description}</p>
+
+					<h4>Salas desse tipo</h4>
+
+					<h:dataTable value="#{roomTypeBean.roomType.roomsWithThatType}"
+						var="room" class="table table-bordered table-striped table-hover">
+						<h:column>
+							<f:facet name="header">#</f:facet>
+    					#{room.id}
+    				</h:column>
+
+						<h:column>
+							<f:facet name="header">Código</f:facet>
+	    				#{room.code}
+	    			</h:column>
+
+						<h:column>
+							<f:facet name="header">Nome</f:facet>
+	    				#{room.name}
+	    			</h:column>
+
+					</h:dataTable>
+
+					<h:link value="Voltar para a listagem de tipo de salas"
+						outcome="allroomtypes.xhtml" />
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+
+
+

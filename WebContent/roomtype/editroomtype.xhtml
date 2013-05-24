@@ -3,35 +3,35 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	template="/templates/main_template.xhtml">
 	<ui:define name="title">
-    	#{appBean.pageTitle("Editando setor")}
+    	#{appBean.pageTitle("Editando tipo de sala")}
   	</ui:define>
 	<ui:define name="content">
 		<div class="container">
 			<div class="row">
 				<div class="span4 offset4">
-					<h3>Editando Setor</h3>
+					<h3>Editando tipo de sala</h3>
 					<h:form class="register_form">
 
-						<h:outputLabel value="Nome do Setor" for="name" />
+						<h:outputLabel value="Nome do tipo de sala" for="name" />
 						<h:inputText id="name" class="input-block-level"
-							value="#{sectorBean.sector.name}">
+							value="#{roomTypeBean.roomType.name}">
 						</h:inputText>
 
 						<h:outputLabel value="Descrição" for="desc" />
 						<h:inputTextarea id="desc" class="input-block-level"
-							value="#{sectorBean.sector.description}" rows="4">
+							value="#{roomTypeBean.roomType.description}" rows="4">
 						</h:inputTextarea>
 						<br />
 
 						<h:commandButton value="Editar" type="submit" class="btn"
-							action="#{sectorBean.updateSector}">
+							action="#{roomTypeBean.updateRoomType}">
 						</h:commandButton>
 					</h:form>
 				</div>
 			</div>
 
-			<h:link value="Voltar para a listagem de setores"
-				outcome="allsectors.xhtml" />
+			<h:link value="Voltar para a listagem de tipos de sala"
+				outcome="allroomtypes.xhtml" />
 		</div>
 	</ui:define>
 </ui:composition>

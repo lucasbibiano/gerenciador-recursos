@@ -18,7 +18,7 @@ public class RoomType {
 	@Column(columnName = "description")
 	public String description;
 	
-	@DBCollection(klass = PlaceResource.class, thisPk = {"id"}, fk = "roomTypeID")
+	@DBCollection(klass = PlaceResource.class, thisPk = {"id"}, fk = {"roomTypeID"})
 	public List<PlaceResource> roomsWithThatType;
 
 	public long getId() {

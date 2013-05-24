@@ -1,42 +1,47 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:ui="http://java.sun.com/jsf/facelets"
-  template="/templates/main_template.xhtml">
-  <ui:define name="title">
-      #{appBean.pageTitle("Listar Tipos de Sala")}
-    </ui:define>
-  <ui:define name="content">
-    <div class="container">
-      <h3>Lista de Tipos de Sala</h3>
-      <!-- TODO -->
-      <!-- Listar todos os setores, pesquisa-los, e fornecer um jeito de deleta-los -->
-      <table class="table table-bordered table-striped table-hover">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Nome</th>
-            <th>Descrição</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1</td>
-            <td>Sala da Aula</td>
-            <td>Sala destinada para aulas.</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>Laboratório com Computadores</td>
-            <td>Laboratório com computadores.</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>Sala de Reuniões</td>
-            <td>Usada para reuniões de funcionários.</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </ui:define>
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/templates/main_template.xhtml">
+	<ui:define name="title">
+    	#{appBean.pageTitle("Listar Departamentos")}
+  	</ui:define>
+	<ui:define name="content">
+		<div class="container">
+			<h:form>
+				<h3>Lista de Tipos de sala</h3>
+
+				<h:dataTable binding="#{roomTypeBean.dataTable}"
+					value="#{roomTypeBean.roomTypes}" var="rt"
+					class="table table-bordered table-striped table-hover">
+					<h:column>
+						<f:facet name="header">#</f:facet>
+    					#{rt.id}
+    				</h:column>
+
+					<h:column>
+						<f:facet name="header">Nome</f:facet>
+	    				#{rt.name}
+	    			</h:column>
+
+					<h:column>
+						<f:facet name="header">Descrição</f:facet>
+	    				#{rt.description}
+	    			</h:column>
+
+					<h:column>
+						<f:facet name="header"></f:facet>
+						<h:commandLink action="#{roomTypeBean.showRoomType}" value="Detalhes" /> |
+						<h:commandLink action="#{roomTypeBean.editRoomType}" value="Editar" /> |
+						<h:commandLink action="#{roomTypeBean.deleteRoomType}" value="Remover" onclick="return confirm('Tem certeza de que deseja remover o tipo de sala?')" />
+					</h:column>
+
+				</h:dataTable>
+			</h:form>		
+			
+			<a href="/Open-Res/faces/roomtype/newroomtype.xhtml">Novo tipo de sala</a>
+		</div>
+	</ui:define>
 </ui:composition>
 
 
