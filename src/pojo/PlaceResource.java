@@ -1,7 +1,10 @@
 package pojo;
 
+import java.util.List;
+
 import dal.annotations.Column;
 import dal.annotations.ForeignKey;
+import dal.annotations.ManyToMany;
 import dal.annotations.Storeable;
 
 @Storeable(tableName = "Places")
@@ -33,6 +36,14 @@ public class PlaceResource implements Resource {
 	@ForeignKey(thisSideAttrs = {"roomTypeID"}, otherSideAttrs = {"id"})
 	public RoomType roomType;
 	
+	@ManyToMany(onTable = "Places_Services", otherClass = ServiceResource.class,
+		thisPK = {"id"}, thisPKOtherSide = {"placeID"}, otherPK = {"id"}, otherPKOtherSide = {"serviceID"})
+	public List<ServiceResource> services;
+		
+	public List<ServiceResource> getServices() {
+		return services;
+	}
+
 	public String getFullName() {
 		return name + " " + code;
 	}

@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	template="/templates/main_template.xhtml">
+	<ui:define name="title">
+    	#{appBean.pageTitle("Listar Recurso Serviço")}
+  	</ui:define>
+	<ui:define name="content">
+		<div class="container">
+			<h:form>
+				<h3>Lista de Recursos Serviço</h3>
+
+				<h:dataTable binding="#{serviceResourceBean.dataTable}"
+					value="#{serviceResourceBean.serviceResources}" var="rt"
+					class="table table-bordered table-striped table-hover">
+					<h:column>
+						<f:facet name="header">#</f:facet>
+    					#{rt.id}
+    				</h:column>
+
+					<h:column>
+						<f:facet name="header">Nome</f:facet>
+	    				#{rt.name}
+	    			</h:column>
+
+					<h:column>
+						<f:facet name="header">Descrição</f:facet>
+	    				#{rt.description}
+	    			</h:column>
+
+					<h:column>
+						<f:facet name="header"></f:facet>
+						<h:commandLink action="#{serviceResourceBean.showServiceResource}" value="Detalhes" /> |
+						<h:commandLink action="#{serviceResourceBean.editServiceResource}" value="Editar" /> |
+						<h:commandLink action="#{serviceResourceBean.deleteServiceResource}" value="Remover" onclick="return confirm('Tem certeza de que deseja remover o recurso serviço?')" />
+					</h:column>
+
+				</h:dataTable>
+			</h:form>		
+			
+			<a href="/Open-Res/faces/serviceresource/newserviceresource.xhtml">Novo recurso serviço</a>
+		</div>
+	</ui:define>
+</ui:composition>
+
+
+

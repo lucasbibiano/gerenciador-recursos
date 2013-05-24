@@ -1,0 +1,48 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/main_template.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:define name="title">
+    	#{appBean.pageTitle("Exibir detalhes do recurso serviço")}
+  	</ui:define>
+	<ui:define name="content">
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+					<h3>Detalhes do recurso serviço</h3>
+
+					<p>Nome: #{serviceResourceBean.serviceResource.name}</p>
+					<p>Descrição: #{serviceResourceBean.serviceResource.description}</p>
+
+					<h4>Salas que dispõem do serviço</h4>
+
+					<h:dataTable value="#{serviceResourceBean.serviceResource.placesWithThatService}"
+						var="room" class="table table-bordered table-striped table-hover">
+						<h:column>
+							<f:facet name="header">#</f:facet>
+    					#{room.id}
+    				</h:column>
+
+						<h:column>
+							<f:facet name="header">Código</f:facet>
+	    				#{room.code}
+	    			</h:column>
+
+						<h:column>
+							<f:facet name="header">Nome</f:facet>
+	    				#{room.name}
+	    			</h:column>
+
+					</h:dataTable>
+
+					<h:link value="Voltar para a listagem de recursos serviço"
+						outcome="allserviceresources.xhtml" />
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+
+
+

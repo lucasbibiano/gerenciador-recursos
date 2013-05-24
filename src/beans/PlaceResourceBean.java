@@ -1,6 +1,8 @@
 package beans;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,7 +13,9 @@ import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 
 import pojo.PlaceResource;
+import pojo.PlacesServices;
 import dal.concrete.mysql.PlaceResourceDAO;
+import dal.concrete.mysql.PlacesServicesDAO;
 
 @ManagedBean(name = "placeResourceBean")
 @SessionScoped
@@ -19,21 +23,35 @@ public class PlaceResourceBean {
 	
 	private PlaceResource place;
 	private List<PlaceResource> places;
+	private List<Long> servicesID;
 	
 	private HtmlDataTable dataTable;
 	
 	private static PlaceResourceDAO dao;
+	private static PlacesServicesDAO psDao;
 	
 	@PostConstruct
 	public void init() {
 		dao = PlaceResourceDAO.getInstance();
+		psDao = PlacesServicesDAO.getInstance();
+		servicesID = new LinkedList<Long>();
 		setPlaceResource(new PlaceResource());
 	}
 
 	public String addPlaceResource() {			
 		try {
-			dao.create(place);
+			long hue = dao.create(place);
 			
+			System.out.println("DEBUG: >>>>" + hue);
+			
+			for (Long serviceID: servicesID) {
+				PlacesServices ps = new PlacesServices();
+				ps.placeID = hue;
+				ps.serviceID = serviceID;
+				
+				psDao.create(ps);
+			}
+						
 			FacesContext.getCurrentInstance()
 		       .addMessage("success", new FacesMessage("Novo recurso objeto cadastrado"));
 			
@@ -136,6 +154,14 @@ public class PlaceResourceBean {
 		}	
 		
 		return places;
+	}
+
+	public List<Long> getServicesID() {
+		return servicesID;
+	}
+
+	public void setServicesID(List<Long> servicesID) {
+		this.servicesID = servicesID;
 	}
 	
 }

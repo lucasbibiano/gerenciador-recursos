@@ -1,6 +1,9 @@
 package pojo;
 
+import java.util.List;
+
 import dal.annotations.Column;
+import dal.annotations.ManyToMany;
 import dal.annotations.Storeable;
 
 @Storeable(tableName = "Services")
@@ -14,6 +17,14 @@ public class ServiceResource implements Resource {
 	
 	@Column(columnName = "description")
 	public String description;
+	
+	@ManyToMany(onTable = "Places_Services", otherClass = PlaceResource.class,
+		otherPK = {"id"}, otherPKOtherSide = {"placeID"}, thisPK = {"id"}, thisPKOtherSide = {"serviceID"})
+	public List<PlaceResource> placesWithThatService;
+
+	public List<PlaceResource> getPlacesWithThatService() {
+		return placesWithThatService;
+	}
 
 	public long getId() {
 		return id;

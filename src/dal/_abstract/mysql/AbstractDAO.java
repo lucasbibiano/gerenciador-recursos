@@ -3,6 +3,7 @@ package dal._abstract.mysql;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -11,11 +12,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import pojo.PlaceResource;
+import pojo.ServiceResource;
+
 import dal.annotations.Column;
 import dal.annotations.DBCollection;
 import dal.annotations.ForeignKey;
+import dal.annotations.ManyToMany;
 import dal.annotations.Polymorphic;
 import dal.annotations.Storeable;
+import dal.concrete.mysql.PlaceResourceDAO;
 import dal.connection.ConnectionManager;
 
 public abstract class AbstractDAO<T> {
@@ -98,10 +104,74 @@ public abstract class AbstractDAO<T> {
 	public void loadRelationships(T object) {
 		loadOneRelationships(object);
 		loadManyRelationships(object);
-		loadPolymorphicRelationShips(object);
+		loadPolymorphicRelationships(object);
+		loadManyToManyRelationships(object);
+	}
+	
+	public void loadManyToManyRelationships(T object) {
+		for (Field field: className.getFields()) {			
+			ManyToMany mtm = field.getAnnotation(ManyToMany.class);
+			
+			if (mtm != null) {				
+				StringBuilder builder = new StringBuilder();
+				
+				builder.append("Select distinct " + mtm.otherClass().getAnnotation(Storeable.class).tableName() + ".* from ");
+				builder.append(getTableName() + ", ");
+				builder.append(mtm.onTable() + ", ");
+				builder.append(mtm.otherClass().getAnnotation(Storeable.class).tableName());
+				builder.append(" where " + joinString(className, mtm.onTable(),
+					mtm.thisPK(), mtm.thisPKOtherSide()));
+				builder.append(" and " + joinString(mtm.otherClass(), mtm.onTable(),
+					mtm.otherPK(), mtm.otherPKOtherSide()));
+				
+				System.out.println(builder.toString());
+				
+				Connection conn;
+				try {
+					conn = ConnectionManager.getConnection();
+					ArrayList<T> result = new ArrayList<T>();
+					
+					Statement statement = null;
+			        
+			        statement = conn.createStatement();
+			        
+			        ResultSet rs = statement.executeQuery(builder.toString());
+			        
+			        AbstractDAO<?> daoAux =
+			        	(AbstractDAO<?>) Class.forName("dal.concrete.mysql." + 
+			        			mtm.otherClass().getSimpleName() + "DAO").newInstance();
+			        
+			        while (rs.next()) {
+			        	T obj = (T) daoAux.resultSetToObject(rs);
+			        	
+			        	result.add(obj);
+			        }
+			        
+					field.set(object, result);
+				} catch (ClassNotFoundException | SQLException | InstantiationException | IllegalAccessException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	private String joinString(Class<?> klass, String otherTable, String[] thisPK, String[] otherPK) {
+		StringBuilder builder = new StringBuilder();
+		
+		String tableName = klass.getAnnotation(Storeable.class).tableName();
+		
+		String prefix = "";
+		for (int i = 0; i < thisPK.length; i++) {
+			builder.append(prefix);
+			prefix = " and ";
+			builder.append(tableName + "." + thisPK[i] + "=");
+			builder.append(otherTable + "." + otherPK[i]);
+		}
+		
+		return builder.toString();
 	}
 
-	private void loadPolymorphicRelationShips(T object) {
+	private void loadPolymorphicRelationships(T object) {
 		for (Field field: className.getFields()) {			
 			Polymorphic pol = field.getAnnotation(Polymorphic.class);
 						
@@ -219,17 +289,7 @@ public abstract class AbstractDAO<T> {
         
 		try {
 			while (rs.next()) {
-				T obj = (T) className.newInstance();
-	
-				for (Field field : className.getFields()) {
-					Column col = field.getAnnotation(Column.class);
-	
-					if (col != null) {
-						
-						field.set(obj, rs.getObject(col.columnName()));
-						
-					}
-				}
+				T obj = resultSetToObject(rs);
 				
 				result.add(obj);
 			}
@@ -243,6 +303,22 @@ public abstract class AbstractDAO<T> {
         rs.close();
         
         return result.get(0);
+	}
+
+	protected T resultSetToObject(ResultSet rs) throws InstantiationException,
+			IllegalAccessException, SQLException {
+		T obj = (T) className.newInstance();
+
+		for (Field field : className.getFields()) {
+			Column col = field.getAnnotation(Column.class);
+
+			if (col != null) {
+				
+				field.set(obj, rs.getObject(col.columnName()));
+				
+			}
+		}
+		return obj;
 	}
 	
 	public List<T> getByAttributes(HashMap<String, Object> attrs) throws SQLException, ClassNotFoundException {
@@ -261,17 +337,7 @@ public abstract class AbstractDAO<T> {
         
 		try {
 			while (rs.next()) {
-				T obj = (T) className.newInstance();
-	
-				for (Field field : className.getFields()) {
-					Column col = field.getAnnotation(Column.class);
-	
-					if (col != null) {
-						
-						field.set(obj, rs.getObject(col.columnName()));
-						
-					}
-				}
+				T obj = resultSetToObject(rs);
 				
 				result.add(obj);
 			}
@@ -361,22 +427,26 @@ public abstract class AbstractDAO<T> {
 		return builder.toString();
 	}
 
-	public void create(T object) throws ClassNotFoundException, SQLException {
+	public long create(T object) throws ClassNotFoundException, SQLException {
 		Connection conn = ConnectionManager.getConnection();
 		
-		Statement statement = null;
-        int updateQuery = 0;
-        
-        statement = conn.createStatement();
-        
+		PreparedStatement statement = null;
+                        
         String queryString = "Insert into " + getTableName() + " " + createAttributesString() + " values " + createStringToAdd(object);
-        System.out.println(queryString);                
+        statement = conn.prepareStatement(queryString, Statement.RETURN_GENERATED_KEYS);
+
+        System.out.println(queryString);    
         
-        updateQuery = statement.executeUpdate(queryString);
+        long result = statement.executeUpdate();
         
-        if (updateQuery != 0) {
-        	System.out.println("Hue");
-        }
+        ResultSet rs = statement.getGeneratedKeys(); 
+        
+        if (rs.next())
+        	result = rs.getLong(1);
+        
+        statement.close();
+        
+        return result;        
 	}
 	
 	public List<T> getAll() throws ClassNotFoundException, SQLException {
@@ -393,17 +463,7 @@ public abstract class AbstractDAO<T> {
         
         while (rs.next()) {
         	try {
-				T obj = (T) className.newInstance();
-				
-	            for (Field field: className.getFields()) {			
-	    			Column col = field.getAnnotation(Column.class);
-	    			
-	    			if (col != null) {
-	    				
-	    				field.set(obj, rs.getObject(col.columnName()));
-	    				
-	    			}
-	    		}
+				T obj = resultSetToObject(rs);
 	            
 	            result.add(obj);
 			} catch (InstantiationException e){

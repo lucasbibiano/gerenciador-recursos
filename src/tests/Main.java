@@ -135,11 +135,27 @@ public class Main {
 		
 		/**************************************/
 		
+		ServiceResource service2 = new ServiceResource();
+		service2.name = "zuera";
+		service2.description = "hu3";
+		
+		ServiceResourceDAO.getInstance().create(service2);		
+		
+		/**************************************/
+		
 		PlacesServices ps = new PlacesServices();
 		ps.placeID = PlaceResourceDAO.getInstance().getAll().get(0).id;
 		ps.serviceID = ServiceResourceDAO.getInstance().getAll().get(0).id;
 		
 		PlacesServicesDAO.getInstance().create(ps);
+		
+		/**************************************/
+		
+		PlacesServices ps2 = new PlacesServices();
+		ps2.placeID = PlaceResourceDAO.getInstance().getAll().get(0).id;
+		ps2.serviceID = ServiceResourceDAO.getInstance().getAll().get(1).id;
+		
+		PlacesServicesDAO.getInstance().create(ps2);
 		
 		/**************************************/
 		

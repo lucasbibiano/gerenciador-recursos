@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/templates/main_template.xhtml">
+	<ui:define name="title">
+    	#{appBean.pageTitle("Editando recurso serviço")}
+  	</ui:define>
+	<ui:define name="content">
+		<div class="container">
+			<div class="row">
+				<div class="span4 offset4">
+					<h3>Editando recurso serviço</h3>
+					<h:form class="register_form">
+
+						<h:outputLabel value="Nome do recurso" for="name" />
+						<h:inputText id="name" class="input-block-level"
+							value="#{serviceResourceBean.serviceResource.name}">
+						</h:inputText>
+
+						<h:outputLabel value="Descrição" for="desc" />
+						<h:inputTextarea id="desc" class="input-block-level"
+							value="#{serviceResourceBean.serviceResource.description}" rows="4">
+						</h:inputTextarea>
+						<br />
+
+						<h:commandButton value="Editar" type="submit" class="btn"
+							action="#{serviceResourceBean.updateServiceResource}">
+						</h:commandButton>
+					</h:form>
+				</div>
+			</div>
+
+			<h:link value="Voltar para a listagem de recursos serviço"
+				outcome="allserviceresources.xhtml" />
+		</div>
+	</ui:define>
+</ui:composition>
+

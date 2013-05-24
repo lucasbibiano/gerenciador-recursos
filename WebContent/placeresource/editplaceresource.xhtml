@@ -1,0 +1,67 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	template="/templates/main_template.xhtml"
+                xmlns:f="http://java.sun.com/jsf/core">
+	<ui:define name="title">
+    	#{appBean.pageTitle("Editando recurso espaço")}
+  	</ui:define>
+	<ui:define name="content">
+		<div class="container">
+			<div class="row">
+				<div class="span4 offset4">
+					<h3>Editando recurso espaço</h3>
+					<h:form class="register_form">
+
+						<h:outputLabel value="Nome do recurso" for="name" />
+						<h:inputText id="name" class="input-block-level"
+							value="#{placeResourceBean.placeResource.name}">
+						</h:inputText>
+
+						<h:outputLabel value="Código" for="cod" />
+						<h:inputTextarea id="cod" class="input-block-level"
+							value="#{placeResourceBean.placeResource.code}" rows="4">
+						</h:inputTextarea>
+
+						<h:outputLabel value="Largura" for="larg" />
+						<h:inputTextarea id="larg" class="input-block-level"
+							value="#{placeResourceBean.placeResource.width}" rows="4">
+						</h:inputTextarea>
+
+						<h:outputLabel value="Comprimento" for="comp" />
+						<h:inputTextarea id="comp" class="input-block-level"
+							value="#{placeResourceBean.placeResource.length}" rows="4">
+						</h:inputTextarea>
+
+						<h:outputLabel value="Capacidade" for="cap" />
+						<h:inputTextarea id="cap" class="input-block-level"
+							value="#{placeResourceBean.placeResource.capacity}" rows="4">
+						</h:inputTextarea>
+
+						<h:outputLabel value="Serviços" for="servs" />
+						<h:selectManyListbox id="servs"
+							value="#{placeResourceBean.servicesID}">
+							<f:selectItems value="#{serviceResourceBean.serviceResources}" var="serv"
+								itemValue="#{serv.id}" itemLabel="#{serv.name}" />
+						</h:selectManyListbox>
+
+						<h:outputLabel value="Descrição" for="desc" />
+						<h:inputTextarea id="desc" class="input-block-level"
+							value="#{placeResourceBean.placeResource.description}" rows="4">
+						</h:inputTextarea>
+
+						<br />
+
+						<h:commandButton value="Editar" type="submit" class="btn"
+							action="#{placeResourceBean.updatePlaceResource}">
+						</h:commandButton>
+					</h:form>
+				</div>
+			</div>
+
+			<h:link value="Voltar para a listagem de recursos espaço"
+				outcome="allplaceresources.xhtml" />
+		</div>
+	</ui:define>
+</ui:composition>
+
