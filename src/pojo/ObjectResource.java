@@ -56,5 +56,10 @@ public class ObjectResource implements Resource {
 	}
 	public PlaceResource getAllocatedAt() {
 		return allocatedAt;
-	}	
+	}
+	
+	@Override
+	public String getType() {
+		return "Objects";
+	}
 }

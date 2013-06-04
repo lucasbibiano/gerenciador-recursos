@@ -50,5 +50,8 @@ public class ServiceResource implements Resource {
 		this.description = description;
 	}
 	
-	
+	@Override
+	public String getType() {
+		return "Services";
+	}
 }

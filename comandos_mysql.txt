@@ -52,6 +52,8 @@ CREATE TABLE Permission_Activities_with_Resources (
 CREATE TABLE Users (
   cpf varchar(255) NOT NULL,
   name varchar(255),
+  login varchar(255),
+  password varchar(255),
   email varchar(255),
   telephone varchar(255),
   sectorID bigint,

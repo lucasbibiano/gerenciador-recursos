@@ -13,6 +13,12 @@ public class User {
 	@Column(columnName = "name")
 	public String name;
 	
+	@Column(columnName = "login")
+	public String login;
+	
+	@Column(columnName = "password")
+	public String password;
+	
 	@Column(columnName = "telephone")
 	public String telephone;
 
@@ -29,6 +35,18 @@ public class User {
 	@ForeignKey(thisSideAttrs = {"functionID"}, otherSideAttrs = {"id"})
 	public Function function;
 	
+	public String getLogin() {
+		return login;
+	}
+	public void setLogin(String login) {
+		this.login = login;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	public String getCpf() {
 		return cpf;
 	}

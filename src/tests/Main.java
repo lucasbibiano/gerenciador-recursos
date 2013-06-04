@@ -29,6 +29,7 @@ import pojo.RoomType;
 import pojo.Sector;
 import pojo.ServiceResource;
 import pojo.User;
+import utils.Utils;
 
 public class Main {
 	public static void main(String[] args) throws Exception {
@@ -68,6 +69,8 @@ public class Main {
 		user.name = "Mr. zuera";
 		user.email = "zuero@zuera.com";
 		user.telephone = "1234567890";
+		user.login = "zuera";
+		user.password = Utils.MungPass("huehue");
 		user.functionID = FunctionDAO.getInstance().getAll().get(0).id;
 		user.sectorID = SectorDAO.getInstance().getAll().get(0).id;
 

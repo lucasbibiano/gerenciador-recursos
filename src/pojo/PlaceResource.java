@@ -123,4 +123,9 @@ public class PlaceResource implements Resource {
 	public List<ObjectResource> getObjectsAllocated() {
 		return objectsAllocated;
 	}
+	
+	@Override
+	public String getType() {
+		return "Places";
+	}
 }

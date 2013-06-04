@@ -27,6 +27,8 @@ import dal.connection.ConnectionManager;
 public abstract class AbstractDAO<T> {
 
 	private Class<?> className;
+	private StringBuilder builder = new StringBuilder();
+
 	
 	public AbstractDAO(Class<?> klass) {
 		className = klass;
@@ -36,6 +38,14 @@ public abstract class AbstractDAO<T> {
 		return className.getAnnotation(Storeable.class).tableName();
 	}
 	
+	public void beginTransiction() {
+		builder.append("START TRANSACTION");
+	}
+
+	public void setTransaction(boolean isTransaction) {
+		builder.append("END TRANSACTION");
+	}
+
 	private String createAttributesString() {
 		StringBuilder builder = new StringBuilder();
 		
@@ -114,7 +124,7 @@ public abstract class AbstractDAO<T> {
 			
 			if (mtm != null) {				
 				StringBuilder builder = new StringBuilder();
-				
+								
 				builder.append("Select distinct " + mtm.otherClass().getAnnotation(Storeable.class).tableName() + ".* from ");
 				builder.append(getTableName() + ", ");
 				builder.append(mtm.onTable() + ", ");
@@ -123,9 +133,9 @@ public abstract class AbstractDAO<T> {
 					mtm.thisPK(), mtm.thisPKOtherSide()));
 				builder.append(" and " + joinString(mtm.otherClass(), mtm.onTable(),
 					mtm.otherPK(), mtm.otherPKOtherSide()));
-				
-				System.out.println(builder.toString());
-				
+								
+				System.out.println(builder.toString());				
+
 				Connection conn;
 				try {
 					conn = ConnectionManager.getConnection();
@@ -427,13 +437,17 @@ public abstract class AbstractDAO<T> {
 
 	public long create(T object) throws ClassNotFoundException, SQLException {
 		Connection conn = ConnectionManager.getConnection();
+		StringBuilder builder = new StringBuilder();
 		
 		PreparedStatement statement = null;
-                        
-        String queryString = "Insert into " + getTableName() + " " + createAttributesString() + " values " + createStringToAdd(object);
-        statement = conn.prepareStatement(queryString, Statement.RETURN_GENERATED_KEYS);
+		                        
+        builder.append("Insert into ");
+        builder.append(getTableName() + " ");
+        builder.append(createAttributesString() + " values " + createStringToAdd(object) + ";");
+                
+        statement = conn.prepareStatement(builder.toString(), Statement.RETURN_GENERATED_KEYS);
 
-        System.out.println(queryString);    
+        System.out.println(builder.toString());    
         
         long result = statement.executeUpdate();
         
@@ -489,10 +503,6 @@ public abstract class AbstractDAO<T> {
         System.out.println(queryString);            
         
         updateQuery = statement.executeUpdate(queryString);
-        
-        if (updateQuery != 0) {
-        	System.out.println("Hue");
-        }
 	}
 	
 	public void update(T oldObject, T newObject) throws ClassNotFoundException, SQLException {
@@ -508,10 +518,6 @@ public abstract class AbstractDAO<T> {
         System.out.println(queryString);            
         
         updateQuery = statement.executeUpdate(queryString);
-        
-        if (updateQuery != 0) {
-        	System.out.println("Hue");
-        }
 	}
 
 	private String updateStringToAdd(T newObject) {
@@ -582,10 +588,6 @@ public abstract class AbstractDAO<T> {
         System.out.println(queryString);            
         
         updateQuery = statement.executeUpdate(queryString);
-        
-        if (updateQuery != 0) {
-        	System.out.println("Hue");
-        }
 	}
 	
 	public void deleteAll() throws ClassNotFoundException, SQLException {
@@ -600,10 +602,6 @@ public abstract class AbstractDAO<T> {
         System.out.println(queryString);            
         
         updateQuery = statement.executeUpdate(queryString);
-        
-        if (updateQuery != 0) {
-        	System.out.println("Hue");
-        }
 	}
 }
 

@@ -1,6 +1,7 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	template="/templates/main_template.xhtml">
+	template="/templates/main_template.xhtml"
+                xmlns:h="http://java.sun.com/jsf/html">
 	<ui:define name="title">
       #{appBean.pageTitle()}
   	</ui:define>
@@ -20,18 +21,25 @@
 					</header>
 					<div class="span4 offset2">
 						<section id="login-box" class="well">
-							<h3>Entrar</h3>
-							<form class="login-form">
-								<label class="control-label" for="input01">Usuário</label> <input
-									type="text" class="input-block-level" /> <label
-									class="control-label" for="input01">Senha</label> <input
-									type="text" class="input-block-level" /> <br />
+							<h:form class="login-form" rendered="#{userBean.currentUser.cpf == true}">
+								<h3>Entrar</h3>
+							
+								<h:outputLabel value="Login" for="login" />
+								<h:inputText id="login" class="input-block-level"
+									value="#{userBean.currentUser.login}">
+								</h:inputText>
+								
+								<h:outputLabel value="Senha" for="pass" />
+								<h:inputText id="pass" class="input-block-level"
+									value="#{userBean.currentUser.password}">
+								</h:inputText>
 
-								<button type="submit" class="btn">Entrar</button>
-								<p class="forgot-pass-link">
-									<a href="#">Esqueci minha senha</a>
-								</p>
-							</form>
+								<h:commandButton value="Logar" type="submit" class="btn"
+									action="#{userBean.login}">
+								</h:commandButton>							
+							</h:form>
+							<h:outputText value="Logado como #{userBean.currentUser.name}"
+								rendered="#{userBean.currentUser.cpf != true}"/>
 						</section>
 					</div>
 				</div>

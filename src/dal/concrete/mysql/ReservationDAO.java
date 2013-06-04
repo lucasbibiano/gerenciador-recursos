@@ -3,9 +3,10 @@ package dal.concrete.mysql;
 import dal._abstract.mysql.AbstractDAO;
 
 import pojo.Reservation;
+import pojo.Resource;
+import pojo.User;
 
-public class ReservationDAO extends AbstractDAO<Reservation>{
-
+public class ReservationDAO extends AbstractDAO<Reservation> {
 	private static ReservationDAO instance;
 
 	public ReservationDAO() {

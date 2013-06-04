@@ -1,6 +1,8 @@
 package beans;
 
+import java.io.Serializable;
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -11,14 +13,17 @@ import javax.faces.component.html.HtmlDataTable;
 import javax.faces.context.FacesContext;
 
 import pojo.User;
+import utils.Utils;
 import dal.concrete.mysql.UserDAO;
 
 @ManagedBean(name = "userBean")
 @SessionScoped
-public class UserBean {
+public class UserBean implements Serializable {
 	
 	private List<User> users;
 	private User user;
+	
+	private User currentUser;
 	
 	private UserDAO dao;
 	
@@ -28,10 +33,42 @@ public class UserBean {
 	public void init() {
 		dao = UserDAO.getInstance();		
 		setUser(new User());
+		User u = new User();
+		u.cpf = "true";
+		
+		setCurrentUser(u);
+	}
+	
+	public void login() {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("login", currentUser.name);
+		params.put("password", Utils.MungPass(currentUser.password));
+		
+		List<User> result = null;
+		
+		try {
+			result = dao.getByAttributes(params);
+		} catch (ClassNotFoundException | SQLException e) {
+			e.printStackTrace();
+		}
+		
+		if (result != null && !result.isEmpty()) {
+			currentUser = result.get(0);
+		}
+		else {
+			currentUser = new User();
+			currentUser.cpf = "true";
+		}
+	}
+	
+	public void logout() {
+		currentUser = new User();
+		currentUser.cpf = "true";
 	}
 	
 	public String addUser() {			
 		try {
+			user.password = Utils.MungPass(user.password);
 			dao.create(user);
 			
 			FacesContext.getCurrentInstance()
@@ -62,7 +99,7 @@ public class UserBean {
 		user = (User) dataTable.getRowData();
 		
 		try {
-			dao.delete(user);
+			dao.deleteByPk(user);
 			
 			FacesContext.getCurrentInstance()
 		       .addMessage("success", new FacesMessage("Usuário deletado"));
@@ -84,6 +121,7 @@ public class UserBean {
 	
 	public String updateUser() {
 		try {
+			user.password = Utils.MungPass(user.password);
 			dao.update(user);
 			
 			FacesContext.getCurrentInstance()
@@ -137,5 +175,13 @@ public class UserBean {
 
 	public void setDataTable(HtmlDataTable dataTable) {
 		this.dataTable = dataTable;
+	}
+
+	public User getCurrentUser() {
+		return currentUser;
+	}
+
+	public void setCurrentUser(User currentUser) {
+		this.currentUser = currentUser;
 	}
 }
