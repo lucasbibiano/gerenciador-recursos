@@ -7,19 +7,17 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.component.html.HtmlDataTable;
+import javax.faces.context.FacesContext;
 
-import dal.concrete.mysql.ReservationDAO;
-import dal.concrete.mysql.ReservationObjectDAO;
-import dal.concrete.mysql.UserDAO;
-
-import pojo.PlaceResource;
 import pojo.Reservation;
 import pojo.ReservationObject;
-import pojo.User;
+import dal.concrete.mysql.ReservationDAO;
+import dal.concrete.mysql.ReservationObjectDAO;
 
 @ManagedBean(name = "reservationBean")
 @SessionScoped
@@ -83,10 +81,17 @@ public class ReservationBean {
 	public String approveReservation() {
 		try {
 			reservation = (Reservation) dataTable.getRowData();
-			reservation.approved = true;
-			reservation.pendingApproval = false;
-		
-			reservationDAO.update(reservation);
+			
+			if (reservationDAO.isPossible(reservation)) {
+				reservation.approved = true;
+				reservation.pendingApproval = false;
+			
+				reservationDAO.update(reservation);
+			}
+			else {
+				FacesContext.getCurrentInstance()
+			       .addMessage("error", new FacesMessage("Algum dos recursos dessa reserva não está disponível"));
+			}
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}

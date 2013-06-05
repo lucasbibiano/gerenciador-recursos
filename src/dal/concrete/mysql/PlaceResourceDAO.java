@@ -1,11 +1,13 @@
 package dal.concrete.mysql;
 
 import java.sql.SQLException;
-
-import dal._abstract.mysql.AbstractDAO;
+import java.sql.Timestamp;
+import java.util.HashMap;
+import java.util.List;
 
 import pojo.PlaceResource;
-import pojo.RoomType;
+import pojo.Reservation;
+import dal._abstract.mysql.AbstractDAO;
 
 public class PlaceResourceDAO extends AbstractDAO<PlaceResource> {
 	private static PlaceResourceDAO instance;
@@ -20,35 +22,24 @@ public class PlaceResourceDAO extends AbstractDAO<PlaceResource> {
 		return instance;
 	}
 	
-	public static void main(String[] args) {
-		PlaceResourceDAO dao = PlaceResourceDAO.getInstance();
-		
-		RoomType type = new RoomType();
-		type.name = "sala bolada";
-		type.description = "uhfalshdfsadf";
-		
-		long typeID = 0;
+	public boolean isAvailable(PlaceResource place, Timestamp begin, Timestamp end) {
+		HashMap<String, Object> params = new HashMap<String, Object>();
+		params.put("approved", true);
+		params.put("placeID", place.id);
 		
 		try {
-			RoomTypeDAO.getInstance().create(type);
-			typeID = RoomTypeDAO.getInstance().getAll().get(0).id;
-		} catch (ClassNotFoundException | SQLException e1) {
-			e1.printStackTrace();
-		}
-		
-		PlaceResource hue = new PlaceResource();
-		hue.name = "huehueheuhe";
-		hue.description = "heuheuheu";
-		hue.capacity = 42;
-		hue.code = "heuheuheu";
-		hue.length = 332;
-		hue.width = 34432;
-		hue.roomTypeID = typeID;
-		
-		try {
-			dao.create(hue);
+			List<Reservation> reservations = ReservationDAO.getInstance().getByAttributes(params);
+			
+			for (Reservation r: reservations) {
+				return begin.compareTo(r.endTime) <= 0 && r.beginTime.compareTo(end) <= 0;
+			}
+			
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
-		}		
+			
+			return false;
+		}
+		
+		return true;
 	}
 }

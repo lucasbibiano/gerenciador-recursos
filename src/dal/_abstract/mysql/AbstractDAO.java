@@ -12,23 +12,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-import pojo.PlaceResource;
-import pojo.ServiceResource;
-
 import dal.annotations.Column;
 import dal.annotations.DBCollection;
 import dal.annotations.ForeignKey;
 import dal.annotations.ManyToMany;
 import dal.annotations.Polymorphic;
 import dal.annotations.Storeable;
-import dal.concrete.mysql.PlaceResourceDAO;
 import dal.connection.ConnectionManager;
 
+@SuppressWarnings("unchecked")
 public abstract class AbstractDAO<T> {
 
 	private Class<?> className;
-	private StringBuilder builder = new StringBuilder();
-
 	
 	public AbstractDAO(Class<?> klass) {
 		className = klass;
@@ -486,7 +481,6 @@ public abstract class AbstractDAO<T> {
 		Connection conn = ConnectionManager.getConnection();
 		
 		Statement statement = null;
-        int updateQuery = 0;
         
         statement = conn.createStatement();
         
@@ -494,14 +488,13 @@ public abstract class AbstractDAO<T> {
         	+ " where " + generateCompareString(newObject, true);
         System.out.println(queryString);            
         
-        updateQuery = statement.executeUpdate(queryString);
+        statement.executeUpdate(queryString);
 	}
 	
 	public void update(T oldObject, T newObject) throws ClassNotFoundException, SQLException {
 		Connection conn = ConnectionManager.getConnection();
 		
 		Statement statement = null;
-        int updateQuery = 0;
         
         statement = conn.createStatement();
         
@@ -509,7 +502,7 @@ public abstract class AbstractDAO<T> {
         	+ " where " + generateCompareString(oldObject, false);
         System.out.println(queryString);            
         
-        updateQuery = statement.executeUpdate(queryString);
+        statement.executeUpdate(queryString);
 	}
 
 	private String updateStringToAdd(T newObject) {
@@ -572,28 +565,26 @@ public abstract class AbstractDAO<T> {
 		Connection conn = ConnectionManager.getConnection();
 		
 		Statement statement = null;
-        int updateQuery = 0;
         
         statement = conn.createStatement();
         
         String queryString = "Delete from " + getTableName() + " where " + generateCompareString(object, true);
         System.out.println(queryString);            
         
-        updateQuery = statement.executeUpdate(queryString);
+        statement.executeUpdate(queryString);
 	}
 	
 	public void deleteAll() throws ClassNotFoundException, SQLException {
 		Connection conn = ConnectionManager.getConnection();
 		
 		Statement statement = null;
-        int updateQuery = 0;
         
         statement = conn.createStatement();
         
         String queryString = "Delete from " + getTableName();
         System.out.println(queryString);            
         
-        updateQuery = statement.executeUpdate(queryString);
+        statement.executeUpdate(queryString);
 	}
 }
 

@@ -2,9 +2,8 @@ package dal.concrete.mysql;
 
 import dal._abstract.mysql.AbstractDAO;
 
+import pojo.ObjectResource;
 import pojo.Reservation;
-import pojo.Resource;
-import pojo.User;
 
 public class ReservationDAO extends AbstractDAO<Reservation> {
 	private static ReservationDAO instance;
@@ -17,5 +16,16 @@ public class ReservationDAO extends AbstractDAO<Reservation> {
 		if (instance == null)
 			instance = new ReservationDAO();
 		return instance;
+	}
+	
+	public boolean isPossible(Reservation reservation) {
+		loadRelationships(reservation);
+		
+		for (ObjectResource or: reservation.objects) {
+			if (!ObjectResourceDAO.getInstance().isAvailable(or, reservation.beginTime, reservation.endTime))
+				return false;
+		}
+		
+		return PlaceResourceDAO.getInstance().isAvailable(reservation.placeReserved, reservation.beginTime, reservation.endTime);
 	}
 }
