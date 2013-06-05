@@ -12,7 +12,7 @@
 				<div class="span4 offset4">
 					<h3>Novo Usuário</h3>
 
-					<h:form>
+					<h:form id="new-user-form">
 						<h:outputLabel value="Nome" for="name" />
 						<h:inputText id="name" class="input-block-level"
 							value="#{userBean.user.name}">
@@ -26,6 +26,16 @@
 						<h:outputLabel value="Email" for="email" />
 						<h:inputText id="email" class="input-block-level"
 							value="#{userBean.user.email}">
+						</h:inputText>
+						
+						<h:outputLabel value="Login" for="lo" />
+						<h:inputText id="lo" class="input-block-level"
+							value="#{userBean.user.login}">
+						</h:inputText>
+						
+						<h:outputLabel value="Senha" for="senha" />
+						<h:inputText id="senha" class="input-block-level"
+							value="#{userBean.user.password}">
 						</h:inputText>
 
 						<h:outputLabel value="Telefone" for="phone" />

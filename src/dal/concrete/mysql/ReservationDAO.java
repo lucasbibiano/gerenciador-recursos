@@ -22,8 +22,10 @@ public class ReservationDAO extends AbstractDAO<Reservation> {
 		loadRelationships(reservation);
 		
 		for (ObjectResource or: reservation.objects) {
-			if (!ObjectResourceDAO.getInstance().isAvailable(or, reservation.beginTime, reservation.endTime))
+			if (!ObjectResourceDAO.getInstance().isAvailable(or, reservation.beginTime, reservation.endTime)) {
+				System.out.println(or.name + " " + reservation.beginTime + " " + reservation.endTime);
 				return false;
+			}
 		}
 		
 		return PlaceResourceDAO.getInstance().isAvailable(reservation.placeReserved, reservation.beginTime, reservation.endTime);

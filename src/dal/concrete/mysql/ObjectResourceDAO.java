@@ -27,7 +27,7 @@ public class ObjectResourceDAO extends AbstractDAO<ObjectResource> {
 	
 	public boolean isAvailable(ObjectResource obj, Timestamp begin, Timestamp end) {
 		String query = "select * from Reservations, Reservations_Objects where" +
-				" Reservations_Objects.reservationID=Reservations.id and Reservations.approved=true" +
+				" Reservations_Objects.reservationID=Reservations.id and Reservations.approved=true and Reservations.pendingApproval=false" +
 				" and Reservations_Objects.objectID=" + obj.id;
 		
 		ResultSet rs;

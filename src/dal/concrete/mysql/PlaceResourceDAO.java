@@ -25,13 +25,15 @@ public class PlaceResourceDAO extends AbstractDAO<PlaceResource> {
 	public boolean isAvailable(PlaceResource place, Timestamp begin, Timestamp end) {
 		HashMap<String, Object> params = new HashMap<String, Object>();
 		params.put("approved", true);
+		params.put("pendingApproval", false);
 		params.put("placeID", place.id);
 		
 		try {
 			List<Reservation> reservations = ReservationDAO.getInstance().getByAttributes(params);
 			
 			for (Reservation r: reservations) {
-				return begin.compareTo(r.endTime) <= 0 && r.beginTime.compareTo(end) <= 0;
+				if (begin.compareTo(r.endTime) <= 0 && r.beginTime.compareTo(end) <= 0)
+					return false;
 			}
 			
 		} catch (ClassNotFoundException | SQLException e) {
