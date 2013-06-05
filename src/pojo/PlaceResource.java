@@ -43,7 +43,24 @@ public class PlaceResource implements Resource {
 	
 	@DBCollection(klass = ObjectResource.class, thisPk = {"id"}, fk = {"allocatedAtID"})
 	public List<ObjectResource> objectsAllocated;
+	
+	@Column(columnName = "sectorID")
+	public long sectorID;
+	@ForeignKey(thisSideAttrs = {"sectorID"}, otherSideAttrs = {"id"})
+	public Sector sector;
 		
+	public long getSectorID() {
+		return sectorID;
+	}
+
+	public void setSectorID(long sectorID) {
+		this.sectorID = sectorID;
+	}
+
+	public Sector getSector() {
+		return sector;
+	}
+
 	public List<ServiceResource> getServices() {
 		return services;
 	}

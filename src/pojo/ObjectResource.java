@@ -24,6 +24,23 @@ public class ObjectResource implements Resource {
 	@ForeignKey(thisSideAttrs = {"allocatedAtID"}, otherSideAttrs = {"id"})
 	public PlaceResource allocatedAt;
 	
+	@Column(columnName = "sectorID")
+	public long sectorID;
+	@ForeignKey(thisSideAttrs = {"sectorID"}, otherSideAttrs = {"id"})
+	public Sector sector;
+	
+	public long getSectorID() {
+		return sectorID;
+	}
+	public void setSectorID(long sectorID) {
+		this.sectorID = sectorID;
+	}
+	public Sector getSector() {
+		return sector;
+	}
+	public void setSector(Sector sector) {
+		this.sector = sector;
+	}
 	public long getId() {
 		return id;
 	}

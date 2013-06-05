@@ -21,25 +21,68 @@
 						class="table table-bordered table-striped table-hover">
 						<h:column>
 							<f:facet name="header">CPF</f:facet>
-    					#{user.cpf}
+	    					#{user.cpf}
+	    				</h:column>
+
+						<h:column>
+							<f:facet name="header">Nome</f:facet>
+		    				#{user.name}
+		    			</h:column>
+
+						<h:column>
+							<f:facet name="header">Email</f:facet>
+		    				#{user.email}
+		    			</h:column>
+
+						<h:column>
+							<f:facet name="header">Telefone</f:facet>
+		    				#{user.telephone}
+		    			</h:column>
+
+					</h:dataTable>
+
+					<h4>Salas que pertencem ao setor</h4>
+
+					<h:dataTable value="#{sectorBean.sector.places}" var="pl"
+						class="table table-bordered table-striped table-hover">
+						<h:column>
+							<f:facet name="header">#</f:facet>
+    					#{pl.id}
     				</h:column>
 
 						<h:column>
 							<f:facet name="header">Nome</f:facet>
-	    				#{user.name}
+	    				#{pl.name}
 	    			</h:column>
 
 						<h:column>
-							<f:facet name="header">Email</f:facet>
-	    				#{user.email}
-	    			</h:column>
-
-						<h:column>
-							<f:facet name="header">Telefone</f:facet>
-	    				#{user.telephone}
+							<f:facet name="header">Código</f:facet>
+	    				#{pl.code}
 	    			</h:column>
 
 					</h:dataTable>
+
+					<h4>Objetos que pertencem ao setor</h4>
+
+					<h:dataTable value="#{sectorBean.sector.objects}" var="obj"
+						class="table table-bordered table-striped table-hover">
+						<h:column>
+							<f:facet name="header">#</f:facet>
+    					#{obj.id}
+    				</h:column>
+
+						<h:column>
+							<f:facet name="header">Nome</f:facet>
+	    				#{obj.name}
+	    			</h:column>
+
+						<h:column>
+							<f:facet name="header">Tombamento</f:facet>
+	    				#{obj.tombamento}
+	    			</h:column>
+
+					</h:dataTable>
+
 
 					<h:link value="Voltar para a listagem de setores"
 						outcome="allsectors.xhtml" />

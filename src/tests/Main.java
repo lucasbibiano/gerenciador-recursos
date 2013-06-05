@@ -41,7 +41,7 @@ public class Main {
 		/**************************************/
 		
 		Permission permission = new Permission();
-		permission.name = "Permissão para zuar";
+		permission.name = "Permissão para zoar";
 		permission.description = "The zuera never ends...";
 		
 		PermissionDAO.getInstance().create(permission);
@@ -94,6 +94,7 @@ public class Main {
 		placeRes.length = 100;
 		placeRes.width = 100;
 		placeRes.roomTypeID = RoomTypeDAO.getInstance().getAll().get(0).id;
+		placeRes.sectorID = SectorDAO.getInstance().getAll().get(0).id;
 		
 		PlaceResourceDAO.getInstance().create(placeRes);
 		
@@ -117,6 +118,8 @@ public class Main {
 		object.description = "Instrumento de zuera";
 		object.tombamento = "ZU3R4";
 		object.allocatedAtID = PlaceResourceDAO.getInstance().getAll().get(0).id;
+		object.sectorID = SectorDAO.getInstance().getAll().get(0).id;
+
 		
 		ObjectResourceDAO.getInstance().create(object);
 		

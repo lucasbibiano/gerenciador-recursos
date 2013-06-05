@@ -116,6 +116,7 @@ public class ReservationBean {
 	public String cancelDecision() {
 		try {
 			reservation = (Reservation) dataTable.getRowData();
+			reservation.approved = false;
 			reservation.pendingApproval = true;
 		
 			reservationDAO.update(reservation);

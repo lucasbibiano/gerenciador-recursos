@@ -20,6 +20,20 @@ public class Sector {
 	
 	@DBCollection(klass = User.class, thisPk = {"id"}, fk = {"sectorID"})
 	public List<User> users;
+	
+	@DBCollection(klass = ObjectResource.class, thisPk = {"id"}, fk = {"sectorID"})
+	public List<ObjectResource> objects;
+	
+	@DBCollection(klass = PlaceResource.class, thisPk = {"id"}, fk = {"sectorID"})
+	public List<PlaceResource> places;
+
+	public List<ObjectResource> getObjects() {
+		return objects;
+	}
+
+	public List<PlaceResource> getPlaces() {
+		return places;
+	}
 
 	public long getId() {
 		return id;

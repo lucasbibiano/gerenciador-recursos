@@ -79,6 +79,7 @@ CREATE TABLE Places (
   length int,
   capacity int,
   roomTypeID bigint NOT NULL,
+  sectorID bigint,
   FOREIGN KEY (roomTypeID) REFERENCES RoomTypes(id),
   PRIMARY KEY(id),
 INDEX Places_code_INDEX(code));
@@ -106,6 +107,7 @@ CREATE TABLE Objects (
   name varchar(255),
   description varchar(255),
   placeID bigint,
+  sectorID bigint,
   FOREIGN KEY(placeID) REFERENCES Places(id),
   PRIMARY KEY(id),
 INDEX Objects_id_INDEX(id));
