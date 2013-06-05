@@ -2,7 +2,8 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	template="/templates/main_template.xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:f="http://java.sun.com/jsf/core">
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:c="http://java.sun.com/jstl/core">
 	<ui:define name="title">
       #{appBean.pageTitle("Listar Reservas")}
     </ui:define>
@@ -28,33 +29,37 @@
 
 					<h:column>
 						<f:facet name="header">Início</f:facet>
-	    				#{rt.startTime}
+	    				#{rt.beginTime}
 	    			</h:column>
 
 					<h:column>
 						<f:facet name="header">Fim</f:facet>
 	    				#{rt.endTime}
 	    			</h:column>
-
-	    			<h:column>
-						<f:facet name="header">Aprovada</f:facet>
-	    				${rt.approved}
-	    			</h:column>
 	    			
-					<h:column>
-						<f:facet name="header">Esperando aprovação</f:facet>
-	    				${rt.pending}
+	    			<h:column>
+						<f:facet name="header">Status</f:facet>
+						
+						<h:outputText value="Aguardando aprovação" rendered="#{rt.pendingApproval}"/>
+						<h:outputText value="Rejeitada" rendered="#{!(rt.pendingApproval or rt.approved)}"/>
+						<h:outputText value="Aprovada" rendered="#{!rt.pendingApproval and rt.approved}"/>
+
 	    			</h:column>
 
 					<h:column>
 						<f:facet name="header"></f:facet>
+						
+						<h:commandLink id="Link1" value="Aprovar"
+							action="#{reservationBean.approveReservation()}" /> |
+
+						<h:commandLink id="Link2" value="Rejeitar"
+							action="#{reservationBean.disapproveReservation()}" /> |
+							
+						<h:commandLink id="Link3" value="Cancelar decisão"
+							action="#{reservationBean.cancelDecision()}" /> |
+								
 						<h:commandLink action="#{reservationBean.showReservation}"
-							value="Detalhes" /> |
-						<h:commandLink action="#{reservationBean.editReservation}"
-							value="Editar" /> |
-						<h:commandLink action="#{reservationBean.deleteReservation}"
-							value="Remover"
-							onclick="return confirm('Tem certeza de que deseja remover a reserva?')" />
+							value="Detalhes" />
 					</h:column>
 
 				</h:dataTable>

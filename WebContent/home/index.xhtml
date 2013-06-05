@@ -30,21 +30,6 @@
 								</h:inputText>
 								
 								<h:outputLabel value="Senha" for="pass" />
-								<h:inputText id="pass" class="input-block-level"
+								<h:inputSecret id="pass" class="input-block-level"
 									value="#{userBean.currentUser.password}">
-								</h:inputText>
-
-								<h:commandButton value="Logar" type="submit" class="btn"
-									action="#{userBean.login}">
-								</h:commandButton>							
-							</h:form>
-							<h:outputText value="Logado como #{userBean.currentUser.name}"
-								rendered="#{userBean.currentUser.cpf != true}"/>
-						</section>
-					</div>
-				</div>
-			</section>
-		</div>
-		
-	</ui:define>
-</ui:composition>
+								</h:inputSecret>

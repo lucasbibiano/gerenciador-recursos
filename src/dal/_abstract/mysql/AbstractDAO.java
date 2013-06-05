@@ -37,14 +37,6 @@ public abstract class AbstractDAO<T> {
 	public String getTableName() {
 		return className.getAnnotation(Storeable.class).tableName();
 	}
-	
-	public void beginTransiction() {
-		builder.append("START TRANSACTION");
-	}
-
-	public void setTransaction(boolean isTransaction) {
-		builder.append("END TRANSACTION");
-	}
 
 	private String createAttributesString() {
 		StringBuilder builder = new StringBuilder();

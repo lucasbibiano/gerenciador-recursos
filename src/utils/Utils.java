@@ -3,6 +3,7 @@ package utils;
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Timestamp;
 
 public class Utils {
 	public static String MungPass(String pass) {
@@ -18,5 +19,10 @@ public class Utils {
 		}
 		
 		return "******";
+	}
+	
+	public static void main(String[] args) {
+		String str = "2013-06-04 00:00:45";
+		System.out.println(Timestamp.valueOf(str));
 	}
 }

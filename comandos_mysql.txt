@@ -67,6 +67,7 @@ CREATE TABLE RoomTypes (
   id bigint NOT NULL AUTO_INCREMENT,
   name varchar(255),
   description varchar(255),
+  PRIMARY KEY(id),
 INDEX RoomTypes_id_INDEX(id));
 
 CREATE TABLE Places (
@@ -105,7 +106,7 @@ CREATE TABLE Objects (
   name varchar(255),
   description varchar(255),
   placeID bigint,
-  FOREIGN KEY (placeID) REFERENCES Places(id),
+  FOREIGN KEY(placeID) REFERENCES Places(id),
   PRIMARY KEY(id),
 INDEX Objects_id_INDEX(id));
 
@@ -116,17 +117,16 @@ CREATE TABLE Reservations (
   endTime datetime,
   approved bool,
   pendingApproval bool,
-  userCpf varchar(255) NOT NULL,
-
+  userCpf varchar(255) NOT NULL,  
+  placeID bigint,
   PRIMARY KEY(id),
 INDEX Reservations_id_INDEX(id));
 
-CREATE TABLE Reservations_Resources (
+CREATE TABLE Reservations_Objects (
   reservationID bigint,
-
-  resourceID bigint,
-  resourceType varchar(255),
+  objectID bigint,
 
   FOREIGN KEY (reservationID) REFERENCES Reservations(id),
-  PRIMARY KEY(reservationID, resourceID)
+  FOREIGN KEY (objectID) REFERENCES Objects(id),
+  PRIMARY KEY(reservationID, objectID)
 );

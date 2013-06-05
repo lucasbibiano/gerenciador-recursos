@@ -1,9 +1,11 @@
 package pojo;
 
 import java.sql.Timestamp;
+import java.util.List;
 
 import dal.annotations.Column;
 import dal.annotations.ForeignKey;
+import dal.annotations.ManyToMany;
 import dal.annotations.Storeable;
 
 @Storeable(tableName = "Reservations")
@@ -32,6 +34,39 @@ public class Reservation {
 	@ForeignKey(thisSideAttrs = {"userCpf"}, otherSideAttrs = {"cpf"})
 	public User user;
 	
+	@Column(columnName = "placeID")
+	public long placeID;
+	@ForeignKey(thisSideAttrs = {"placeID"}, otherSideAttrs = {"id"})
+	public PlaceResource placeReserved;
+	
+	@ManyToMany(onTable = "Reservations_Objects", otherClass = ObjectResource.class,
+		thisPK = {"id"}, thisPKOtherSide = {"reservationID"}, otherPK = {"id"}, otherPKOtherSide = {"objectID"})
+	public List<ObjectResource> objects;
+	
+	public List<ObjectResource> getObjects() {
+		return objects;
+	}
+	public void setObjects(List<ObjectResource> objects) {
+		this.objects = objects;
+	}
+	public boolean isPendingApproval() {
+		return pendingApproval;
+	}
+	public void setPendingApproval(boolean pendingApproval) {
+		this.pendingApproval = pendingApproval;
+	}
+	public long getPlaceID() {
+		return placeID;
+	}
+	public void setPlaceID(long placeID) {
+		this.placeID = placeID;
+	}
+	public PlaceResource getPlaceReserved() {
+		return placeReserved;
+	}
+	public void setPlaceReserved(PlaceResource placeReserved) {
+		this.placeReserved = placeReserved;
+	}
 	public long getId() {
 		return id;
 	}
@@ -44,11 +79,11 @@ public class Reservation {
 	public void setSolicitationTime(Timestamp solicitationTime) {
 		this.solicitationTime = solicitationTime;
 	}
-	public Timestamp getStartTime() {
+	public Timestamp getBeginTime() {
 		return beginTime;
 	}
-	public void setStartTime(Timestamp startTime) {
-		this.beginTime = startTime;
+	public void setBeginTime(Timestamp beginTime) {
+		this.beginTime = beginTime;
 	}
 	public Timestamp getEndTime() {
 		return endTime;

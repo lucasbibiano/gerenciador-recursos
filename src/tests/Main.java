@@ -11,7 +11,7 @@ import dal.concrete.mysql.PermissionDAO;
 import dal.concrete.mysql.PlaceResourceDAO;
 import dal.concrete.mysql.PlacesServicesDAO;
 import dal.concrete.mysql.ReservationDAO;
-import dal.concrete.mysql.ReservationResourceDAO;
+import dal.concrete.mysql.ReservationObjectDAO;
 import dal.concrete.mysql.RoomTypeDAO;
 import dal.concrete.mysql.SectorDAO;
 import dal.concrete.mysql.ServiceResourceDAO;
@@ -24,7 +24,7 @@ import pojo.PermissionActivitiesWithResources;
 import pojo.PlaceResource;
 import pojo.PlacesServices;
 import pojo.Reservation;
-import pojo.ReservationResource;
+import pojo.ReservationObject;
 import pojo.RoomType;
 import pojo.Sector;
 import pojo.ServiceResource;
@@ -106,17 +106,9 @@ public class Main {
 		reser.beginTime = new Timestamp(Calendar.getInstance().getTimeInMillis());
 		reser.endTime = new Timestamp(Calendar.getInstance().getTimeInMillis());
 		reser.userCpf = UserDAO.getInstance().getAll().get(0).cpf;
+		reser.placeID = PlaceResourceDAO.getInstance().getAll().get(0).id;
 		
 		ReservationDAO.getInstance().create(reser);
-		
-		/**************************************/
-		
-		ReservationResource reres = new ReservationResource();
-		reres.reservationID = ReservationDAO.getInstance().getAll().get(0).id;
-		reres.resourceType = "PlaceResource";
-		reres.resourceID = PlaceResourceDAO.getInstance().getAll().get(0).id;
-		
-		ReservationResourceDAO.getInstance().create(reres);
 		
 		/**************************************/
 		
@@ -127,6 +119,14 @@ public class Main {
 		object.allocatedAtID = PlaceResourceDAO.getInstance().getAll().get(0).id;
 		
 		ObjectResourceDAO.getInstance().create(object);
+		
+		/**************************************/
+		
+		ReservationObject reres = new ReservationObject();
+		reres.reservationID = ReservationDAO.getInstance().getAll().get(0).id;
+		reres.objectID = ObjectResourceDAO.getInstance().getAll().get(0).id;
+		
+		ReservationObjectDAO.getInstance().create(reres);
 		
 		/**************************************/
 		

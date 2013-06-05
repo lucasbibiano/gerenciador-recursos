@@ -1,6 +1,5 @@
 package beans;
 
-import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -18,7 +17,7 @@ import dal.concrete.mysql.UserDAO;
 
 @ManagedBean(name = "userBean")
 @SessionScoped
-public class UserBean implements Serializable {
+public class UserBean {
 	
 	private List<User> users;
 	private User user;
@@ -41,29 +40,32 @@ public class UserBean implements Serializable {
 	
 	public void login() {
 		HashMap<String, Object> params = new HashMap<String, Object>();
-		params.put("login", currentUser.name);
-		params.put("password", Utils.MungPass(currentUser.password));
+		params.put("login", currentUser.login);
 		
 		List<User> result = null;
 		
 		try {
 			result = dao.getByAttributes(params);
+			
+			if (result == null || result.isEmpty())
+				return;
+			
+			if (result.get(0).password.equals(Utils.MungPass(currentUser.password)))
+				currentUser = result.get(0);
+			else {
+				currentUser = new User();
+				currentUser.cpf = "true";
+			}
 		} catch (ClassNotFoundException | SQLException e) {
 			e.printStackTrace();
 		}
-		
-		if (result != null && !result.isEmpty()) {
-			currentUser = result.get(0);
-		}
-		else {
-			currentUser = new User();
-			currentUser.cpf = "true";
-		}
 	}
 	
-	public void logout() {
+	public String logout() {
 		currentUser = new User();
 		currentUser.cpf = "true";
+		
+		return "/home/index.html";
 	}
 	
 	public String addUser() {			

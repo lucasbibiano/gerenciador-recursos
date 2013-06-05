@@ -1,0 +1,49 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/main_template.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:define name="title">
+    	#{appBean.pageTitle("Exibir detalhes da reserva")}
+  	</ui:define>
+	<ui:define name="content">
+		<div class="container">
+			<div class="row">
+				<div class="span12">
+					<h3>Detalhes da reserva</h3>
+
+					<p>Nome: #{reservationBean.reservation.user.name}</p>
+					<p>Sala: #{reservationBean.reservation.placeReserved.name}</p>
+					
+
+					<h4>Objetos reservados</h4>
+
+					<h:dataTable value="#{reservationBean.reservation.objects}"
+						var="obj" class="table table-bordered table-striped table-hover">
+						<h:column>
+							<f:facet name="header">#</f:facet>
+    					#{obj.id}
+    				</h:column>
+
+						<h:column>
+							<f:facet name="header">Tombamento</f:facet>
+	    				#{obj.tombamento}
+	    			</h:column>
+
+						<h:column>
+							<f:facet name="header">Nome</f:facet>
+	    				#{obj.name}
+	    			</h:column>
+
+					</h:dataTable>
+
+					<h:link value="Voltar para a listagem de reservas"
+						outcome="allreservations.xhtml" />
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
+
+
+

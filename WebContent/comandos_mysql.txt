@@ -1,0 +1,132 @@
+drop database openres;
+
+create database openres;
+
+use openres;
+
+CREATE TABLE Sectors (
+  id bigint NOT NULL AUTO_INCREMENT,
+  name varchar(255),
+  description varchar(255),
+  PRIMARY KEY(id),
+INDEX Sectors_id_INDEX (id));
+
+CREATE TABLE Permissions (
+  id bigint NOT NULL AUTO_INCREMENT,
+  name varchar(255),
+  description varchar(255),
+  PRIMARY KEY(id),
+INDEX Permissions_id_INDEX(id));
+
+#enum Activities {CADASTRAR, RESERVAR, APROVAR_RESERVA, etc...}
+CREATE TABLE Activities (
+  id bigint NOT NULL AUTO_INCREMENT,
+  name varchar(255),
+  PRIMARY KEY(id),
+INDEX Activities_id_INDEX(id));
+
+CREATE TABLE Functions (
+  id bigint NOT NULL AUTO_INCREMENT,
+  name varchar(255),
+  description varchar(255),
+  permissionID bigint,
+  FOREIGN KEY (permissionID) REFERENCES Permissions(id),
+  PRIMARY KEY(id),
+INDEX Functions_id_INDEX (id));
+
+CREATE TABLE Permission_Activities_with_Resources (
+  permissionID bigint,
+  activityID bigint,
+
+  #polymorphic association
+  resourceID bigint,
+  resourceType varchar(255),
+
+  FOREIGN KEY (permissionID) REFERENCES Permissions(id),
+  FOREIGN KEY (activityID) REFERENCES Activities(id),
+  #can't enforce fk constraint on polymorphic association
+
+  PRIMARY KEY(permissionID, activityID, resourceID)
+);
+
+CREATE TABLE Users (
+  cpf varchar(255) NOT NULL,
+  name varchar(255),
+  login varchar(255),
+  password varchar(255),
+  email varchar(255),
+  telephone varchar(255),
+  sectorID bigint,
+  functionID bigint,
+  FOREIGN KEY (sectorID) REFERENCES Sectors(id),
+  FOREIGN KEY (functionID) REFERENCES Functions(id),
+  PRIMARY KEY(cpf),
+INDEX Users_cpf_INDEX (cpf));
+
+CREATE TABLE RoomTypes (
+  id bigint NOT NULL AUTO_INCREMENT,
+  name varchar(255),
+  description varchar(255),
+INDEX RoomTypes_id_INDEX(id));
+
+CREATE TABLE Places (
+  id bigint NOT NULL AUTO_INCREMENT,
+  code varchar(255) NOT NULL,
+  name varchar(255),
+  description varchar(255),
+  width int,
+  length int,
+  capacity int,
+  roomTypeID bigint NOT NULL,
+  FOREIGN KEY (roomTypeID) REFERENCES RoomTypes(id),
+  PRIMARY KEY(id),
+INDEX Places_code_INDEX(code));
+
+CREATE TABLE Services (
+  id bigint NOT NULL AUTO_INCREMENT,
+  name varchar(255),
+  description varchar(255),
+  PRIMARY KEY(id),
+INDEX Services_id_INDEX(id));
+
+CREATE TABLE Places_Services (
+  placeID bigint NOT NULL,
+  serviceID bigint NOT NULL,
+
+  FOREIGN KEY(placeID) REFERENCES Places(id),
+  FOREIGN KEY(serviceID) REFERENCES Services(id),
+
+  PRIMARY KEY(placeID, serviceID)
+);
+
+CREATE TABLE Objects (
+  id bigint NOT NULL AUTO_INCREMENT,
+  tomb varchar(255) UNIQUE NOT NULL,
+  name varchar(255),
+  description varchar(255),
+  placeID bigint,
+  FOREIGN KEY (placeID) REFERENCES Places(id),
+  PRIMARY KEY(id),
+INDEX Objects_id_INDEX(id));
+
+CREATE TABLE Reservations (
+  id bigint NOT NULL AUTO_INCREMENT,
+  solicitationTime datetime,
+  beginTime datetime,
+  endTime datetime,
+  approved bool,
+  pendingApproval bool,
+  userCpf varchar(255) NOT NULL,
+
+  PRIMARY KEY(id),
+INDEX Reservations_id_INDEX(id));
+
+CREATE TABLE Reservations_Resources (
+  reservationID bigint,
+
+  resourceID bigint,
+  resourceType varchar(255),
+
+  FOREIGN KEY (reservationID) REFERENCES Reservations(id),
+  PRIMARY KEY(reservationID, resourceID)
+);

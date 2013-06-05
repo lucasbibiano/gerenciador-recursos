@@ -1,54 +1,50 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:ui="http://java.sun.com/jsf/facelets"
-  template="/templates/main_template.xhtml">
-  <ui:define name="title">
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	template="/templates/main_template.xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<ui:define name="title">
       #{appBean.pageTitle("Nova Reserva")}
     </ui:define>
-  <ui:define name="content">
-    <div class="container">
-      <div class="span4 offset4">
-        <h3>Realizando Reserva</h3>
+	<ui:define name="content">
+		<div class="container">
+			<div class="span4 offset4">
+				<h3>Realizando Reserva</h3>
 
-        <div class="row register_form">
-          <label class="control-label" for="input01">CPF do Reservante</label> 
-          <input type="text" class="input-block-level" /> <br />
+				<div class="row register_form">
+					<h:form>
+						<h:outputLabel value="Sala" for="salas" />
+						<h:selectOneListbox id="salas" value="#{reservationBean.roomID}"
+							converter="javax.faces.Long">
+							<f:selectItems value="#{placeResourceBean.placeResources}"
+								var="serv" itemValue="#{serv.id}" itemLabel="#{serv.name}" />
+						</h:selectOneListbox>
 
-          <label class="control-label" for="input01">Recursos</label>
-          <input type="text" class="input-block-level" /> <br /> 
-          
-          <button class="btn">+</button>
-          
-          <div class="control-group">
-            <label class="control-label" for="select01">Hora de Início</label>
-            <div class="controls">
-              <select id="select01">
-                <option>8:00</option>
-                <option>8:15</option>
-                <option>8:30</option>
-                <option>8:45</option>
-                <option>9:00</option>
-              </select>
-            </div>
-          </div>
-          
-          <div class="control-group">
-            <label class="control-label" for="select01">Hora de Término</label>
-            <div class="controls">
-              <select id="select01">
-                <option>8:00</option>
-                <option>8:15</option>
-                <option>8:30</option>
-                <option>8:45</option>
-                <option>9:00</option>
-              </select>
-            </div>
-          </div>
+						<h:outputLabel value="Objetos" for="objs" />
+						<h:selectManyCheckbox id="objs"
+							value="#{reservationBean.objectsIDs}"
+							converter="javax.faces.Long">
+							<f:selectItems value="#{objectResourceBean.objectResources}"
+								var="serv" itemValue="#{serv.id}" itemLabel="#{serv.name}" />
+						</h:selectManyCheckbox>
 
-        </div>
-        <button type="submit" class="btn">Cadastrar</button>
-        <button type="submit" class="btn">Cancelar</button>
-      </div>
-    </div>
-  </ui:define>
+						<h:outputLabel value="Hora de início" for="str" />
+						<h:inputText id="str" class="input-block-level"
+							value="#{reservationBean.beginTime}">
+						</h:inputText>
+
+						<h:outputLabel value="Hora de término" for="end" />
+						<h:inputText id="end" class="input-block-level"
+							value="#{reservationBean.endTime}">
+						</h:inputText>
+
+						<h:commandButton value="Reservar" type="submit" class="btn"
+							action="#{reservationBean.reserve}">
+						</h:commandButton>
+					</h:form>
+				</div>
+			</div>
+		</div>
+	</ui:define>
 </ui:composition>
 
